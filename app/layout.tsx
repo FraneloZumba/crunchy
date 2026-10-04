@@ -1,15 +1,25 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Fraunces } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const bodyFont = DM_Sans({ subsets: ['latin'], variable: '--font-body' })
-const displayFont = Fraunces({ subsets: ['latin'], variable: '--font-display' })
+// Conectando las fuentes de marca desde public/fonts/
+const bodyFont = localFont({
+  src: '../public/fonts/Greycliff.otf',
+  variable: '--font-body',
+  display: 'swap',
+})
+
+const displayFont = localFont({
+  src: '../public/fonts/Sorbonne.otf',
+  variable: '--font-display',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Crunchy | Churros de Autor en Cuenca',
-  description: 'Churros de autor, postres y café en Casa Solano, Cuenca. Grab it. Bite it. Love it.',
-  generator: 'v0.app',
+  description: 'Churros de autor, postres y café en Casa Solano, Cuenca. grab it . bite it . love it.',
+  generator: 'v0.app', // Puedes quitarlo si ya no usamos v0
   icons: {
     icon: [
       {
@@ -31,7 +41,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#fff9f5',
+  themeColor: '#ede8e2', // Color Bone
 }
 
 export default function RootLayout({

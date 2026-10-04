@@ -9,15 +9,57 @@
   --font-serif: var(--font-display);
   --color-border: var(--border);
   --color-ring: var(--ring);
+  
+  /* Paleta Oficial Crunchy */
+  --color-powder: #bae0e3;
+  --color-bistre: #44271a;
+  --color-bone: #ede8e2;
+  --color-orchid: #ed9aac;
 }
 
-:root { color-scheme: light; --border: #ead8d0; --ring: #e891a6; }
+:root { 
+  color-scheme: light; 
+  --border: #44271a; /* Bistre */
+  --ring: #ed9aac;   /* Orchid Pink */
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: #fff9f5; font-family: var(--font-body), Arial, sans-serif; }
+
+/* Aplicamos Bone como fondo y Bistre como texto por defecto */
+body { 
+  margin: 0; 
+  background: var(--color-bone); 
+  color: var(--color-bistre);
+  font-family: var(--font-body), Arial, sans-serif; 
+}
+
 button, a { -webkit-tap-highlight-color: transparent; }
-::selection { background: #f4a2b8; color: #3d231a; }
+
+::selection { 
+  background: var(--color-powder); 
+  color: var(--color-bistre); 
+}
 
 @layer base {
   * { @apply border-border outline-ring/50; }
+}
+
+/* --- ANIMACIONES PERSONALIZADAS --- */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+/* Accesibilidad: Detener animación si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation-play-state: paused;
+  }
 }

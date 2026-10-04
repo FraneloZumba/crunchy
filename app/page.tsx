@@ -1,23 +1,31 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react' // Añadimos useEffect
 import { ArrowRight, Camera, Clock3, MapPin, Menu, Search, Star, X } from 'lucide-react'
+import Image from 'next/image'
 
+// Nota Fran: Añadí hero1, hero2 y hero3 para el carrusel
 const images = {
-  logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-4ii8Qkj42MaCIBeEhmypGz8GRKmBOY.png',
-  hero: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MFh0KDQqrIUiYuGDmZPmkbGdsLO45f.png',
-  napolitano: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-2YiHjA7he7tbLQQ0KNbtfkkcA0PC81.png',
-  jalapeno: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-wYvj9qcXZWO5MGqZ39rTIz0RJrJ8b6.png',
-  cheesecake: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-iaUddVHqIGo0hqAisnCi3M9QdwDikx.png',
-  vibe: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-mlKBjWzc4qFJzB3y5u2yp1TSpAOAPz.png',
-  space: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-YURbboE5NOjwGOAIT26CVhbqNttNIM.png',
+  logo: '/logo.png',
+  hero1: '/hero1.jpg', 
+  hero2: '/hero2.jpg', 
+  hero3: '/hero3.jpg', 
+  napolitano: '/napolitano.jpg',
+  jalapeno: '/jalapeno.jpg',
+  cheesecake: '/cheesecake.jpg',
+  vibe: '/vibe.jpg',
+  space: '/space.jpg',
+  mascota: '/mascota.png',
 }
 
+const heroCarousel = [images.hero1, images.hero2, images.hero3] // Array del carrusel
+
 const categories = ['Churros de autor', 'Tostadas & salados', 'Postres & tartas', 'Bebidas & cafetería']
+
 const menu = [
   { category: categories[0], name: 'Churro clásico Crunchy', description: 'Azúcar, canela y dip de manjar o chocolate belga.', price: '$3.50', image: images.napolitano },
   { category: categories[0], name: 'Churro relleno especial', description: 'Relleno abundante de manjar, Nutella o crema pastelera.', price: '$4.50', image: images.jalapeno },
-  { category: categories[0], name: 'Box Crunchy para compartir', description: 'Mini churros, toppings y salsas artesanales.', price: '$12.00', image: images.hero },
+  { category: categories[0], name: 'Box Crunchy para compartir', description: 'Mini churros, toppings y salsas artesanales.', price: '$12.00', image: images.hero1 },
   { category: categories[1], name: 'Churro Napolitano', description: 'Tomate, nueces, albahaca, orégano y mozzarella.', price: '$6.90', image: images.napolitano },
   { category: categories[1], name: 'Churro Jalapeño', description: 'Queso crema, tomates confitados, jalapeños y orégano.', price: '$6.90', image: images.jalapeno },
   { category: categories[2], name: 'Cheesecake de frutos rojos', description: 'Tarta artesanal con mermelada casera y almendras.', price: '$5.50', image: images.cheesecake },
@@ -30,47 +38,286 @@ export default function Page() {
   const [activeCategory, setActiveCategory] = useState(categories[0])
   const [query, setQuery] = useState('')
   const [mobileOpen, setMobileOpen] = useState(false)
-  const filtered = useMemo(() => menu.filter((item) => item.category === activeCategory && `${item.name} ${item.description}`.toLowerCase().includes(query.toLowerCase())), [activeCategory, query])
+  
+  // Estado para controlar qué imagen del hero se muestra
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0)
+
+  // Efecto para rotar las imágenes automáticamente cada 4 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % heroCarousel.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const filtered = useMemo(() => 
+    menu.filter((item) => 
+      item.category === activeCategory && 
+      `${item.name} ${item.description}`.toLowerCase().includes(query.toLowerCase())
+    ), 
+  [activeCategory, query])
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#fff9f5] text-[#2b1810]">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#ead8d0]/70 bg-[#fff9f5]/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+    <main className="bg-[#ede8e2] min-h-screen overflow-hidden text-[#44271a]">
+      {/* NAVEGACIÓN */}
+      <header className="top-0 z-50 fixed inset-x-0 bg-[#ede8e2]/90 backdrop-blur-md border-[#44271a]/10 border-b">
+        <div className="flex justify-between items-center mx-auto px-5 lg:px-8 py-4 max-w-7xl">
           <a href="#inicio" className="flex items-center gap-2" aria-label="Crunchy inicio">
-            <img src={images.logo} alt="Crunchy" className="h-11 w-11 rounded-full object-cover" />
-            <span className="font-serif text-2xl font-black tracking-tight">crunchy<span className="text-[#e891a6]">.</span></span>
+            <div className="relative rounded-full w-11 h-11 overflow-hidden">
+              <Image src={images.logo} alt="Crunchy" fill className="object-cover" />
+            </div>
+            <span className="font-serif font-black text-[#44271a] text-2xl tracking-tight">
+              crunchy<span className="text-[#ed9aac]">.</span>
+            </span>
           </a>
-          <nav className="hidden items-center gap-6 text-xs font-bold uppercase tracking-[0.12em] text-[#6e5147] lg:flex">
-            <a href="#menu" className="transition-colors hover:text-[#d86583]">Menú</a><a href="#visitanos" className="transition-colors hover:text-[#d86583]">Visítanos</a><a href="#horarios" className="transition-colors hover:text-[#d86583]">Horarios</a>
+          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#44271a] text-xs uppercase tracking-[0.12em]">
+            <a href="#menu" className="hover:text-[#ed9aac] transition-colors">Menú</a>
+            <a href="#visitanos" className="hover:text-[#ed9aac] transition-colors">Visítanos</a>
+            <a href="#horarios" className="hover:text-[#ed9aac] transition-colors">Horarios</a>
           </nav>
-          <a href="https://wa.me/593999999999" className="hidden rounded-full bg-[#3d231a] px-5 py-3 text-xs font-black uppercase tracking-wider text-white transition-transform hover:-translate-y-0.5 sm:block">Pedir por WhatsApp</a>
-          <button className="rounded-full bg-[#f4a2b8] p-2 lg:hidden" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}>{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>
+          <a href="https://wa.me/593999999999" className="hidden sm:block bg-[#44271a] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+            Pedir por WhatsApp
+          </a>
+          <button className="lg:hidden bg-[#ed9aac] p-2 rounded-full text-[#44271a]" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}>
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-        {mobileOpen && <nav className="flex flex-col gap-4 border-t border-[#ead8d0] px-5 py-5 text-sm font-bold uppercase tracking-wider lg:hidden"><a href="#menu" onClick={() => setMobileOpen(false)}>Menú</a><a href="#visitanos" onClick={() => setMobileOpen(false)}>Visítanos</a><a href="#horarios" onClick={() => setMobileOpen(false)}>Horarios</a></nav>}
+        {/* MENÚ MÓVIL */}
+        {mobileOpen && (
+          <nav className="lg:hidden flex flex-col gap-4 bg-[#ede8e2] px-5 py-5 border-[#44271a]/10 border-t font-bold text-sm uppercase tracking-wider">
+            <a href="#menu" onClick={() => setMobileOpen(false)}>Menú</a>
+            <a href="#visitanos" onClick={() => setMobileOpen(false)}>Visítanos</a>
+            <a href="#horarios" onClick={() => setMobileOpen(false)}>Horarios</a>
+          </nav>
+        )}
       </header>
 
-      <section id="inicio" className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-32 lg:grid-cols-[1.02fr_.98fr] lg:px-8 lg:pb-24 lg:pt-40">
-        <div className="relative z-10">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#efb5c2] bg-white px-4 py-2 text-[11px] font-black uppercase tracking-[0.14em] text-[#a9586e]"><Star size={13} fill="currentColor" /> Casa Solano · Cuenca</div>
-          <h1 className="max-w-3xl font-serif text-[4rem] font-black leading-[.88] tracking-[-.055em] sm:text-7xl lg:text-[6.8rem]">Grab it.<br /><span className="text-[#e891a6]">Bite it.</span><br />Love it.</h1>
-          <p className="mt-7 max-w-lg text-base leading-7 text-[#765b51] sm:text-lg">Churros de autor, rellenos gourmet y café para hacer de cualquier antojo un plan inolvidable.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row"><a href="#menu" className="inline-flex items-center justify-center gap-3 rounded-full bg-[#3d231a] px-6 py-4 text-sm font-black uppercase tracking-wide text-white transition-transform hover:-translate-y-1">Explorar menú <ArrowRight size={17} /></a><a href="https://wa.me/593999999999" className="inline-flex items-center justify-center rounded-full border-2 border-[#3d231a] px-6 py-4 text-sm font-black uppercase tracking-wide transition-colors hover:bg-[#f4a2b8]">Pedir por WhatsApp</a></div>
-          <div className="mt-10 grid max-w-xl grid-cols-3 gap-4 border-t border-[#e4cfc6] pt-6 text-xs font-bold leading-4 text-[#765b51]"><div><span className="mb-2 block text-2xl text-[#e891a6]">01</span>Recién hechos</div><div><span className="mb-2 block text-2xl text-[#e891a6]">02</span>Dulce & salado</div><div><span className="mb-2 block text-2xl text-[#e891a6]">03</span>Muy instagrameable</div></div>
+      {/* HERO SECTION CON PT-22 COMO ACORDAMOS */}
+      <section id="inicio" className="relative items-center gap-10 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-5 lg:px-8 pt-22 lg:pt-22 pb-16 lg:pb-24 max-w-7xl">
+        <div className="z-10 relative">
+          <div className="inline-flex items-center gap-2 bg-white mb-6 px-4 py-2 border border-[#bae0e3] rounded-full font-black text-[#44271a] text-[11px] uppercase tracking-[0.14em]">
+            <Star size={13} fill="#bae0e3" className="text-[#bae0e3]" /> Casa Solano · Cuenca
+          </div>
+          
+          <h1 className="max-w-3xl font-serif font-black text-[#44271a] text-[4rem] lg:text-[6.8rem] sm:text-7xl leading-[.88] tracking-[-.055em]">
+            grab it<span className="text-[#ed9aac]">.</span><br />
+            bite it<span className="text-[#bae0e3]">.</span><br />
+            love it<span className="text-[#ed9aac]">.</span>
+          </h1>
+          
+          <p className="mt-7 max-w-lg text-[#44271a]/80 text-base sm:text-lg leading-7">
+            Churros de autor, rellenos gourmet y café para hacer de cualquier antojo un plan inolvidable.
+          </p>
+          
+          <div className="flex sm:flex-row flex-col gap-3 mt-8">
+            <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#44271a] hover:bg-[#ed9aac] px-6 py-4 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-sm uppercase tracking-wide transition-colors">
+              Explorar menú <ArrowRight size={17} />
+            </a>
+            <a href="https://wa.me/593999999999" className="inline-flex justify-center items-center hover:bg-[#bae0e3] px-6 py-4 border-[#44271a] border-2 rounded-full font-black text-[#44271a] text-sm uppercase tracking-wide transition-colors">
+              Pedir por WhatsApp
+            </a>
+          </div>
+          
+          <div className="gap-4 grid grid-cols-3 mt-10 pt-6 border-[#44271a]/10 border-t max-w-xl font-bold text-[#44271a]/70 text-xs leading-4">
+            <div><span className="block mb-2 text-[#ed9aac] text-2xl">01</span>Recién hechos</div>
+            <div><span className="block mb-2 text-[#bae0e3] text-2xl">02</span>Dulce & salado</div>
+            <div><span className="block mb-2 text-[#ed9aac] text-2xl">03</span>Muy instagrameable</div>
+          </div>
         </div>
+
+        {/* COMPOSICIÓN IMAGEN HERO - AHORA CARRUSEL CON FADE */}
         <div className="relative mx-auto w-full max-w-[530px]">
-          <div className="absolute -right-4 -top-4 z-20 rounded-full bg-[#f4a2b8] px-5 py-4 text-center font-serif text-lg font-black leading-4 text-[#3d231a] shadow-lg shadow-[#d9859e]/30 sm:-right-8 sm:top-8">hecho<br />con amor</div>
-          <div className="relative aspect-[.88] rotate-2 overflow-hidden rounded-[42%_42%_18%_18%] bg-[#e7cdc3] shadow-[18px_22px_0_#f4a2b8]"><img src={images.hero} alt="Selección de churros Crunchy servidos en Casa Solano" className="h-full w-full object-cover" /></div>
-          <div className="absolute -bottom-7 -left-5 -rotate-6 rounded-full bg-white px-5 py-3 font-serif text-sm font-black shadow-lg sm:-left-10">crujiente por fuera ✦</div>
+          <div className="-top-4 sm:top-8 -right-4 sm:-right-8 z-20 absolute bg-[#bae0e3] shadow-[#bae0e3]/30 shadow-lg px-5 py-4 rounded-full font-serif font-black text-[#44271a] text-lg text-center leading-4">
+            hecho<br />con amor
+          </div>
+          
+          {/* Contenedor del Carrusel */}
+          <div className="relative bg-[#ed9aac] shadow-[18px_22px_0_#bae0e3] rounded-[42%_42%_18%_18%] aspect-[.88] overflow-hidden rotate-2">
+            {heroCarousel.map((img, index) => (
+              <Image 
+                key={index}
+                src={img} 
+                alt={`Crunchy Destacado ${index + 1}`} 
+                fill 
+                className={`object-cover transition-opacity duration-1000 ease-in-out ${
+                  index === currentHeroIndex ? 'opacity-100' : 'opacity-0'
+                }`} 
+                priority={index === 0} 
+              />
+            ))}
+          </div>
+
+          <div className="-bottom-7 -left-5 sm:-left-10 absolute bg-[#ede8e2] shadow-lg px-5 py-3 border-[#44271a] border-2 rounded-full font-serif font-black text-[#44271a] text-sm -rotate-6">
+            crujiente por fuera ✦
+          </div>
         </div>
       </section>
 
-      <section id="menu" className="bg-[#4a2c22] px-5 py-20 text-white lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><div className="mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="mb-3 text-xs font-black uppercase tracking-[.2em] text-[#f4a2b8]">Para cada antojo</p><h2 className="font-serif text-5xl font-black leading-none sm:text-6xl">Menú <span className="text-[#f4a2b8]">Crunchy</span></h2></div><div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-3"><Search size={16} className="text-[#f4a2b8]" /><input aria-label="Buscar en el menú" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar..." className="w-28 bg-transparent text-sm outline-none placeholder:text-white/50 sm:w-40" /></div></div><div className="mb-10 flex gap-2 overflow-x-auto pb-2">{categories.map((category, index) => <button key={category} onClick={() => setActiveCategory(category)} className={`whitespace-nowrap rounded-full px-4 py-3 text-xs font-black uppercase tracking-wider transition-colors ${activeCategory === category ? 'bg-[#f4a2b8] text-[#3d231a]' : 'border border-white/20 text-white/70 hover:border-[#f4a2b8]'}`}><span className="mr-2 opacity-60">0{index + 1}</span>{category}</button>)}</div><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{filtered.map((item) => <article key={item.name} className="group overflow-hidden rounded-[26px] bg-[#fff9f5] text-[#2b1810]"><div className="relative aspect-[1.15] overflow-hidden"><img src={item.image} alt={item.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" /><span className="absolute right-4 top-4 rounded-full bg-white px-3 py-2 text-sm font-black">{item.price}</span></div><div className="p-5"><h3 className="font-serif text-2xl font-black">{item.name}</h3><p className="mt-2 text-sm leading-5 text-[#80655b]">{item.description}</p><a href="https://wa.me/593999999999" className="mt-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#c65d7a]">Pedir este <ArrowRight size={14} /></a></div></article>)}{filtered.length === 0 && <p className="col-span-full rounded-3xl bg-white/10 p-10 text-center text-white/70">No encontramos ese antojo. Prueba otra búsqueda.</p>}</div></div></section>
+      {/* MARQUEE ANIMADO (DIVISOR) */}
+      <div className="bg-[#ed9aac] py-3 border-[#44271a] border-y-2 w-full overflow-hidden text-[#44271a]">
+        <div className="flex items-center font-serif font-black text-2xl lowercase tracking-widest animate-marquee">
+          {/* Se repite para crear el efecto infinito */}
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+          <span className="mx-4 whitespace-nowrap">grab it . bite it . love it ✦</span>
+        </div>
+      </div>
 
-      <section id="visitanos" className="px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center"><div><p className="mb-3 text-xs font-black uppercase tracking-[.2em] text-[#c65d7a]">Ven a conocernos</p><h2 className="font-serif text-5xl font-black leading-[.9] sm:text-6xl">Un lugar para<br /><span className="text-[#e891a6]">quedarte.</span></h2><p className="mt-7 max-w-md leading-7 text-[#765b51]">Diseñamos cada rincón para que tu visita se sienta como un pequeño plan especial. Trae a tu persona favorita y deja espacio para el postre.</p><a href="#horarios" className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#f4a2b8] px-5 py-3 text-xs font-black uppercase tracking-wider">Cómo llegar <ArrowRight size={15} /></a></div><div className="grid grid-cols-2 gap-4 sm:gap-6"><img src={images.space} alt="Interior rosado e iluminado de Crunchy" className="h-64 w-full rounded-[30px] object-cover sm:h-80" /><img src={images.vibe} alt="Churro y bebida Crunchy en mesa" className="mt-10 h-64 w-full rounded-[30px] object-cover sm:h-80" /></div></div></div></section>
+      {/* SECCIÓN MENÚ */}
+      <section id="menu" className="bg-[#44271a] px-5 lg:px-8 py-20 lg:py-28 text-[#ede8e2]">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex sm:flex-row flex-col justify-between sm:items-end gap-6 mb-10">
+            <div>
+              <p className="mb-3 font-black text-[#bae0e3] text-xs uppercase tracking-[.2em]">Para cada antojo</p>
+              <h2 className="font-serif font-black text-5xl sm:text-6xl leading-none">Menú <span className="text-[#ed9aac]">Crunchy</span></h2>
+            </div>
+            <div className="flex items-center gap-2 bg-white/5 px-4 py-3 border border-[#ede8e2]/20 focus-within:border-[#ed9aac] rounded-full">
+              <Search size={16} className="text-[#ed9aac]" />
+              <input 
+                aria-label="Buscar en el menú" 
+                value={query} 
+                onChange={(e) => setQuery(e.target.value)} 
+                placeholder="Buscar..." 
+                className="bg-transparent outline-none w-28 sm:w-40 text-[#ede8e2] placeholder:text-[#ede8e2]/50 text-sm" 
+              />
+            </div>
+          </div>
 
-      <section id="horarios" className="px-5 pb-20 lg:px-8 lg:pb-28"><div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2"><div className="rounded-[30px] bg-[#f4a2b8] p-7 sm:p-10"><MapPin className="mb-8" size={28} /><h3 className="font-serif text-4xl font-black">Casa Solano</h3><p className="mt-3 text-[#5c3835]">Cuenca, Ecuador</p><a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#3d231a] px-5 py-3 text-xs font-black uppercase tracking-wider text-white">Abrir en Maps <ArrowRight size={14} /></a></div><div className="rounded-[30px] bg-white p-7 shadow-[0_10px_35px_rgba(92,47,35,.08)] sm:p-10"><div className="mb-7 flex items-center gap-3"><Clock3 className="text-[#d86583]" size={25} /><h3 className="font-serif text-3xl font-black">Horarios</h3></div><div className="space-y-4 text-sm"><div className="flex justify-between border-b border-[#ead8d0] pb-3"><span>Miércoles a Jueves</span><strong>11:00 — 20:00</strong></div><div className="flex justify-between border-b border-[#ead8d0] pb-3"><span>Viernes a Sábado</span><strong>10:00 — 21:00</strong></div><div className="flex justify-between"><span>Domingo</span><strong>10:00 — 18:00</strong></div></div></div></div></section>
+          <div className="flex gap-2 mb-10 pb-2 overflow-x-auto scrollbar-hide">
+            {categories.map((category, index) => (
+              <button 
+                key={category} 
+                onClick={() => setActiveCategory(category)} 
+                className={`whitespace-nowrap rounded-full px-4 py-3 text-xs font-black uppercase tracking-wider transition-colors ${
+                  activeCategory === category 
+                    ? 'bg-[#ed9aac] text-[#44271a]' 
+                    : 'border border-[#ede8e2]/20 text-[#ede8e2]/70 hover:border-[#bae0e3] hover:text-[#bae0e3]'
+                }`}
+              >
+                <span className="opacity-60 mr-2">0{index + 1}</span>{category}
+              </button>
+            ))}
+          </div>
 
-      <footer className="bg-[#3d231a] px-5 py-10 text-white lg:px-8"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-6 sm:flex-row sm:items-center"><div><div className="font-serif text-3xl font-black">crunchy<span className="text-[#f4a2b8]">.</span></div><p className="mt-1 text-xs uppercase tracking-[.2em] text-[#eab2bd]">Grab it · Bite it · Love it</p></div><a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 text-sm font-bold"><Camera size={18} /> @crunchychurros.ec</a><p className="text-xs text-white/50">© 2026 Crunchy Churros de Autor</p></div></footer>
+          <div className="gap-5 grid md:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((item) => (
+              <article key={item.name} className="group bg-[#ede8e2] rounded-[26px] overflow-hidden text-[#44271a]">
+                <div className="relative aspect-[1.15] overflow-hidden">
+                  <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <span className="top-4 right-4 absolute bg-[#bae0e3] px-3 py-2 rounded-full font-black text-[#44271a] text-sm">
+                    {item.price}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-serif font-black text-2xl">{item.name}</h3>
+                  <p className="mt-2 text-[#44271a]/80 text-sm leading-5">{item.description}</p>
+                  <a href="https://wa.me/593999999999" className="inline-flex items-center gap-2 mt-5 font-black text-[#ed9aac] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+                    Pedir este <ArrowRight size={14} />
+                  </a>
+                </div>
+              </article>
+            ))}
+            {filtered.length === 0 && (
+              <p className="col-span-full p-10 border border-[#ede8e2]/10 rounded-3xl text-[#ede8e2]/70 text-center">
+                No encontramos ese antojo. Prueba otra búsqueda.
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN VISÍTANOS */}
+      <section id="visitanos" className="bg-[#bae0e3] px-5 lg:px-8 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="lg:items-center gap-12 grid lg:grid-cols-[.85fr_1.15fr]">
+            <div>
+              <p className="mb-3 font-black text-[#44271a] text-xs uppercase tracking-[.2em]">Ven a conocernos</p>
+              <h2 className="font-serif font-black text-[#44271a] text-5xl sm:text-6xl leading-[.9]">
+                Un lugar para<br /><span className="text-[#ed9aac]">quedarte.</span>
+              </h2>
+              <p className="mt-7 max-w-md text-[#44271a]/80 leading-7">
+                Diseñamos cada rincón para que tu visita se sienta como un pequeño plan especial. Trae a tu persona favorita y deja espacio para el postre.
+              </p>
+              <a href="#horarios" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#ed9aac] mt-7 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+                Cómo llegar <ArrowRight size={15} />
+              </a>
+            </div>
+            <div className="gap-4 sm:gap-6 grid grid-cols-2">
+              <div className="relative border-[#44271a] border-2 rounded-[30px] w-full h-64 sm:h-80 overflow-hidden">
+                <Image src={images.space} alt="Interior de Crunchy" fill className="object-cover" />
+              </div>
+              <div className="relative mt-10 border-[#44271a] border-2 rounded-[30px] w-full h-64 sm:h-80 overflow-hidden">
+                <Image src={images.vibe} alt="Churro Crunchy" fill className="object-cover" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN HORARIOS Y MAPA */}
+      <section id="horarios" className="bg-[#ede8e2] px-5 lg:px-8 py-20 lg:py-28">
+        <div className="gap-5 grid md:grid-cols-2 mx-auto max-w-7xl">
+          <div className="bg-[#ed9aac] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
+            <MapPin className="mb-8 text-[#44271a]" size={28} />
+            <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
+            <p className="mt-3 text-[#44271a]/80">Cuenca, Ecuador</p>
+            <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+              Abrir en Maps <ArrowRight size={14} />
+            </a>
+          </div>
+          <div className="bg-white shadow-[8px_8px_0_#44271a] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
+            <div className="flex items-center gap-3 mb-7">
+              <Clock3 className="text-[#bae0e3]" size={25} />
+              <h3 className="font-serif font-black text-[#44271a] text-3xl">Horarios</h3>
+            </div>
+            <div className="space-y-4 text-[#44271a] text-sm">
+              <div className="flex justify-between pb-3 border-[#44271a]/20 border-b">
+                <span>Miércoles a Jueves</span><strong>11:00 — 20:00</strong>
+              </div>
+              <div className="flex justify-between pb-3 border-[#44271a]/20 border-b">
+                <span>Viernes a Sábado</span><strong>10:00 — 21:00</strong>
+              </div>
+              <div className="flex justify-between">
+                <span>Domingo</span><strong>10:00 — 18:00</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER CON MASCOTA */}
+      <footer className="relative bg-[#44271a] px-5 lg:px-8 pt-20 pb-10 overflow-hidden text-[#ede8e2]">
+        <div className="right-5 sm:right-20 lg:right-40 -bottom-10 absolute opacity-90">
+           <Image src={images.mascota} alt="Mascota Crunchy" width={200} height={200} className="object-contain" />
+        </div>
+        
+        <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
+          <div>
+            <div className="font-serif font-black text-[#ede8e2] text-5xl">
+              crunchy<span className="text-[#ed9aac]">.</span>
+            </div>
+            <p className="mt-2 text-[#bae0e3] text-xs uppercase tracking-[.2em]">
+              Grab it · Bite it · Love it
+            </p>
+          </div>
+          <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
+            <Camera size={18} /> @crunchychurros.ec
+          </a>
+        </div>
+        
+        <div className="z-10 relative mx-auto max-w-7xl text-[#ede8e2]/50 text-xs">
+          © 2026 Crunchy Churros de Autor.
+        </div>
+      </footer>
     </main>
   )
 }
