@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+:root { color-scheme: light; --border: #ead8d0; --ring: #e891a6; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #fff9f5; font-family: var(--font-body), Arial, sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { background: #f4a2b8; color: #3d231a; }
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+}
