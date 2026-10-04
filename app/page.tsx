@@ -7,6 +7,7 @@ import Image from 'next/image'
 // Nota Fran: Añadí hero1, hero2 y hero3 para el carrusel
 const images = {
   logo: '/logo.png',
+  texturaNav: '/textura1.png',
   hero1: '/hero1.jpg', 
   hero2: '/hero2.jpg', 
   hero3: '/hero3.jpg', 
@@ -59,23 +60,34 @@ export default function Page() {
 
   return (
     <main className="bg-[#ede8e2] min-h-screen overflow-hidden text-[#44271a]">
-      {/* NAVEGACIÓN */}
-      <header className="top-0 z-50 fixed inset-x-0 bg-[#ede8e2]/90 backdrop-blur-md border-[#44271a]/10 border-b">
-        <div className="flex justify-between items-center mx-auto px-5 lg:px-8 py-4 max-w-7xl">
+      {/* NAVEGACIÓN CON TEXTURA */}
+      <header 
+        className="top-0 z-50 fixed inset-x-0 border-[#44271a]/20 border-b"
+        style={{ 
+          backgroundImage: `url(${images.texturaNav})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        {/* Capa semi-transparente por si la textura es muy fuerte (ajusta el bg-black/X según necesites) */}
+        <div className="absolute inset-0 bg-[#44271a]/10 backdrop-blur-[2px]"></div> 
+        
+        <div className="relative flex justify-between items-center mx-auto px-5 lg:px-8 py-4 max-w-7xl">
           <a href="#inicio" className="flex items-center gap-2" aria-label="Crunchy inicio">
-            <div className="relative rounded-full w-11 h-11 overflow-hidden">
+            <div className="relative border-[#ede8e2] border-2 rounded-full w-11 h-11 overflow-hidden">
               <Image src={images.logo} alt="Crunchy" fill className="object-cover" />
             </div>
-            <span className="font-serif font-black text-[#44271a] text-2xl tracking-tight">
+            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-tight">
               crunchy<span className="text-[#ed9aac]">.</span>
             </span>
           </a>
-          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#44271a] text-xs uppercase tracking-[0.12em]">
+          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.12em]">
             <a href="#menu" className="hover:text-[#ed9aac] transition-colors">Menú</a>
             <a href="#visitanos" className="hover:text-[#ed9aac] transition-colors">Visítanos</a>
             <a href="#horarios" className="hover:text-[#ed9aac] transition-colors">Horarios</a>
           </nav>
-          <a href="https://wa.me/593999999999" className="hidden sm:block bg-[#44271a] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+          {/* Botón WhatsApp del Nav (Verde oscuro/oliva como en tu diseño) */}
+          <a href="https://wa.me/593999999999" className="hidden sm:block bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
             Pedir por WhatsApp
           </a>
           <button className="lg:hidden bg-[#ed9aac] p-2 rounded-full text-[#44271a]" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}>
@@ -84,7 +96,7 @@ export default function Page() {
         </div>
         {/* MENÚ MÓVIL */}
         {mobileOpen && (
-          <nav className="lg:hidden flex flex-col gap-4 bg-[#ede8e2] px-5 py-5 border-[#44271a]/10 border-t font-bold text-sm uppercase tracking-wider">
+          <nav className="lg:hidden relative flex flex-col gap-4 bg-[#44271a] px-5 py-5 border-[#ede8e2]/20 border-t font-bold text-[#ede8e2] text-sm uppercase tracking-wider">
             <a href="#menu" onClick={() => setMobileOpen(false)}>Menú</a>
             <a href="#visitanos" onClick={() => setMobileOpen(false)}>Visítanos</a>
             <a href="#horarios" onClick={() => setMobileOpen(false)}>Horarios</a>
@@ -93,46 +105,48 @@ export default function Page() {
       </header>
 
       {/* HERO SECTION CON PT-22 COMO ACORDAMOS */}
-      <section id="inicio" className="relative items-center gap-10 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-5 lg:px-8 pt-22 lg:pt-22 pb-16 lg:pb-24 max-w-7xl">
+      {/* HERO SECTION - MODO OSCURO (BISTRE) */}
+      <section id="inicio" className="relative items-center gap-10 grid lg:grid-cols-[1.02fr_.98fr] bg-[#44271a] mx-auto px-5 lg:px-8 pt-32 lg:pt-40 pb-16 lg:pb-24 max-w-7xl">
         <div className="z-10 relative">
-          <div className="inline-flex items-center gap-2 bg-white mb-6 px-4 py-2 border border-[#bae0e3] rounded-full font-black text-[#44271a] text-[11px] uppercase tracking-[0.14em]">
-            <Star size={13} fill="#bae0e3" className="text-[#bae0e3]" /> Casa Solano · Cuenca
+          <div className="inline-flex items-center gap-2 bg-[#ede8e2] mb-6 px-4 py-2 rounded-full font-black text-[#44271a] text-[11px] uppercase tracking-[0.14em]">
+            <Star size={13} fill="#ed9aac" className="text-[#ed9aac]" /> Casa Solano · Cuenca
           </div>
           
-          <h1 className="max-w-3xl font-serif font-black text-[#44271a] text-[4rem] lg:text-[6.8rem] sm:text-7xl leading-[.88] tracking-[-.055em]">
-            grab it<span className="text-[#ed9aac]">.</span><br />
+          <h1 className="max-w-3xl font-serif font-black text-[#ed9aac] text-[4rem] lg:text-[6.8rem] sm:text-7xl leading-[.88] tracking-[-.055em]">
+            grab it<span className="text-[#ede8e2]">.</span><br />
             bite it<span className="text-[#bae0e3]">.</span><br />
-            love it<span className="text-[#ed9aac]">.</span>
+            love it<span className="text-[#ede8e2]">.</span>
           </h1>
           
-          <p className="mt-7 max-w-lg text-[#44271a]/80 text-base sm:text-lg leading-7">
+          <p className="mt-7 max-w-lg text-[#ede8e2]/90 text-base sm:text-lg leading-7">
             Churros de autor, rellenos gourmet y café para hacer de cualquier antojo un plan inolvidable.
           </p>
           
           <div className="flex sm:flex-row flex-col gap-3 mt-8">
-            <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#44271a] hover:bg-[#ed9aac] px-6 py-4 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-sm uppercase tracking-wide transition-colors">
+            {/* Botones con los colores de tu nuevo diseño */}
+            <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#7a2e4a] hover:bg-[#ed9aac] px-6 py-4 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-sm uppercase tracking-wide transition-colors">
               Explorar menú <ArrowRight size={17} />
             </a>
-            <a href="https://wa.me/593999999999" className="inline-flex justify-center items-center hover:bg-[#bae0e3] px-6 py-4 border-[#44271a] border-2 rounded-full font-black text-[#44271a] text-sm uppercase tracking-wide transition-colors">
+            <a href="https://wa.me/593999999999" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-6 py-4 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-sm uppercase tracking-wide transition-colors">
               Pedir por WhatsApp
             </a>
           </div>
           
-          <div className="gap-4 grid grid-cols-3 mt-10 pt-6 border-[#44271a]/10 border-t max-w-xl font-bold text-[#44271a]/70 text-xs leading-4">
-            <div><span className="block mb-2 text-[#ed9aac] text-2xl">01</span>Recién hechos</div>
-            <div><span className="block mb-2 text-[#bae0e3] text-2xl">02</span>Dulce & salado</div>
-            <div><span className="block mb-2 text-[#ed9aac] text-2xl">03</span>Muy instagrameable</div>
+          <div className="gap-4 grid grid-cols-3 mt-10 pt-6 border-[#ede8e2]/20 border-t max-w-xl font-bold text-[#ede8e2]/80 text-xs leading-4">
+            <div><span className="block mb-2 font-serif text-[#ed9aac] text-2xl">01</span>Recién hechos</div>
+            <div><span className="block mb-2 font-serif text-[#bae0e3] text-2xl">02</span>Dulce & salado</div>
+            <div><span className="block mb-2 font-serif text-[#ed9aac] text-2xl">03</span>Muy instagrameable</div>
           </div>
         </div>
 
-        {/* COMPOSICIÓN IMAGEN HERO - AHORA CARRUSEL CON FADE */}
+        {/* COMPOSICIÓN IMAGEN HERO - CARRUSEL */}
         <div className="relative mx-auto w-full max-w-[530px]">
-          <div className="-top-4 sm:top-8 -right-4 sm:-right-8 z-20 absolute bg-[#bae0e3] shadow-[#bae0e3]/30 shadow-lg px-5 py-4 rounded-full font-serif font-black text-[#44271a] text-lg text-center leading-4">
+          <div className="-top-4 sm:top-8 -right-4 sm:-right-8 z-20 absolute bg-[#bae0e3] shadow-black/20 shadow-lg px-5 py-4 rounded-full font-serif font-black text-[#44271a] text-lg text-center leading-4">
             hecho<br />con amor
           </div>
           
-          {/* Contenedor del Carrusel */}
-          <div className="relative bg-[#ed9aac] shadow-[18px_22px_0_#bae0e3] rounded-[42%_42%_18%_18%] aspect-[.88] overflow-hidden rotate-2">
+          {/* El borde de la imagen ahora es Orchid Pink y la sombra la puse un poco más sutil para el fondo oscuro */}
+          <div className="relative bg-[#ede8e2] shadow-[18px_22px_0_#ed9aac] rounded-[42%_42%_18%_18%] aspect-[.88] overflow-hidden rotate-2">
             {heroCarousel.map((img, index) => (
               <Image 
                 key={index}
