@@ -44,6 +44,7 @@ export default function Page() {
   const [quantity, setQuantity] = useState(1)
   const [orderOpen, setOrderOpen] = useState(false)
   const [customerName, setCustomerName] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState<'transferencia' | 'puerta' | ''>('')
 
   const orderItems = Object.entries(order).map(([name, quantity]) => ({
     item: menu.find((entry) => entry.name === name)!,
@@ -61,7 +62,8 @@ export default function Page() {
     setOrderOpen(showSummary)
   }
 
-  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}`
+  const paymentLabel = paymentMethod === 'transferencia' ? 'pagaré por transferencia' : 'pagaré en la puerta de mi domicilio'
+  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}. ${paymentLabel}.`
   const whatsappUrl = `https://wa.me/593999999999?text=${encodeURIComponent(whatsappMessage)}`
 
   // Estado para controlar qué imagen del hero se muestra
@@ -367,9 +369,22 @@ export default function Page() {
             {orderItems.length > 0 && <>
               <label htmlFor="customer-name" className="block mb-2 font-black text-xs uppercase tracking-wider">Pon el nombre de a quién va el pedido</label>
               <input id="customer-name" value={customerName} onChange={(event) => setCustomerName(event.target.value)} placeholder="Tu nombre" className="bg-white px-4 py-3 rounded-xl outline-none w-full text-sm" />
+              <fieldset className="mt-4">
+                <legend className="mb-2 font-black text-xs uppercase tracking-wider">¿Cómo pagarás tu pedido?</legend>
+                <div className="flex flex-col gap-2">
+                  <label className="flex items-center gap-3 bg-white/70 hover:bg-white px-3 py-3 rounded-xl text-sm cursor-pointer">
+                    <input type="radio" name="payment-method" value="transferencia" checked={paymentMethod === 'transferencia'} onChange={() => setPaymentMethod('transferencia')} className="accent-[#3a5a30]" />
+                    Pagaré por transferencia
+                  </label>
+                  <label className="flex items-center gap-3 bg-white/70 hover:bg-white px-3 py-3 rounded-xl text-sm cursor-pointer">
+                    <input type="radio" name="payment-method" value="puerta" checked={paymentMethod === 'puerta'} onChange={() => setPaymentMethod('puerta')} className="accent-[#3a5a30]" />
+                    Pagaré en la puerta de mi domicilio
+                  </label>
+                </div>
+              </fieldset>
               <div className="flex gap-2 mt-4">
                 <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
-                <a href={customerName.trim() ? whatsappUrl : undefined} aria-disabled={!customerName.trim()} onClick={(event) => { if (!customerName.trim()) event.preventDefault() }} className="flex flex-1 justify-center items-center bg-[#3a5a30] px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider">Pedir</a>
+                <a href={customerName.trim() && paymentMethod ? whatsappUrl : undefined} aria-disabled={!customerName.trim() || !paymentMethod} onClick={(event) => { if (!customerName.trim() || !paymentMethod) event.preventDefault() }} className="flex flex-1 justify-center items-center bg-[#3a5a30] px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider">Pedir por WhatsApp</a>
               </div>
             </>}
           </div>
