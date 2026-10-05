@@ -180,14 +180,14 @@ export default function Page() {
       </div>
 
       {/* SECCIÓN MENÚ */}
-      <section id="menu" className="bg-[#44271a] px-5 lg:px-8 py-20 lg:py-28 text-[#ede8e2]">
+      <section id="menu" className="bg-[#44271a] px-4 sm:px-5 lg:px-8 py-10 sm:py-14 lg:py-16 text-[#ede8e2]">
         <div className="mx-auto max-w-7xl">
-          <div className="flex sm:flex-row flex-col justify-between sm:items-end gap-6 mb-10">
+          <div className="flex sm:flex-row flex-col justify-between sm:items-end gap-4 mb-5 sm:mb-6">
             <div>
-              <p className="mb-3 font-black text-[#bae0e3] text-xs uppercase tracking-[.2em]">Para cada antojo</p>
-              <h2 className="font-serif font-black text-5xl sm:text-6xl leading-none tracking-[0.025em]">Menú <span className="text-[#ed9aac]">Crunchy</span></h2>
+              <p className="mb-2 font-black text-[#bae0e3] text-[10px] uppercase tracking-[.2em]">Para cada antojo</p>
+              <h2 className="font-serif font-black text-4xl sm:text-5xl leading-none tracking-[0.025em]">Menú <span className="text-[#ed9aac]">Crunchy</span></h2>
             </div>
-            <div className="flex items-center gap-2 bg-white/5 px-4 py-3 border border-[#ede8e2]/20 focus-within:border-[#ed9aac] rounded-full">
+            <div className="flex items-center gap-2 bg-white/5 px-3 py-2 border border-[#ede8e2]/20 focus-within:border-[#ed9aac] rounded-full">
               <Search size={16} className="text-[#ed9aac]" />
               <input 
                 aria-label="Buscar en el menú" 
@@ -199,12 +199,12 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="flex gap-2 mb-10 pb-2 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 mb-6 pb-1 overflow-x-auto scrollbar-hide">
             {categories.map((category, index) => (
               <button 
                 key={category} 
                 onClick={() => setActiveCategory(category)} 
-                className={`whitespace-nowrap rounded-full px-4 py-3 text-xs font-black uppercase tracking-wider transition-colors ${
+                className={`whitespace-nowrap rounded-full px-3 py-2 text-[10px] font-black uppercase tracking-wider transition-colors ${
                   activeCategory === category 
                     ? 'bg-[#ed9aac] text-[#44271a]' 
                     : 'border border-[#ede8e2]/20 text-[#ede8e2]/70 hover:border-[#bae0e3] hover:text-[#bae0e3]'
@@ -215,19 +215,19 @@ export default function Page() {
             ))}
           </div>
 
-          <div className="gap-5 grid md:grid-cols-2 lg:grid-cols-3">
+          <div className="gap-3 sm:gap-4 grid md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (
-              <article key={item.name} className="group bg-[#ede8e2] rounded-[26px] overflow-hidden text-[#44271a]">
-                <div className="relative aspect-[1.15] overflow-hidden">
+              <article key={item.name} className="group bg-[#ede8e2] rounded-2xl overflow-hidden text-[#44271a]">
+                <div className="relative aspect-[1.35] overflow-hidden">
                   <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <span className="top-4 right-4 absolute bg-[#bae0e3] px-3 py-2 rounded-full font-black text-[#44271a] text-sm">
                     {item.price}
                   </span>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-serif font-black text-2xl">{item.name}</h3>
-                  <p className="mt-2 text-[#44271a]/80 text-sm leading-5">{item.description}</p>
-                  <a href="https://wa.me/593999999999" className="inline-flex items-center gap-2 mt-5 font-black text-[#ed9aac] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+                <div className="p-4">
+                  <h3 className="font-serif font-black text-xl">{item.name}</h3>
+                  <p className="mt-1 text-[#44271a]/80 text-xs leading-4">{item.description}</p>
+                  <a href="https://wa.me/593999999999" className="inline-flex items-center gap-2 mt-3 font-black text-[#ed9aac] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
                     Pedir este <ArrowRight size={14} />
                   </a>
                 </div>
