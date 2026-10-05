@@ -98,15 +98,15 @@ export default function Page() {
 
       {/* HERO SECTION */}
       {/* El fondo marrón ocupa todo el ancho, como en la composición de referencia. */}
-      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-8 lg:pt-4 pb-10 lg:pb-8">
-        <div className="relative items-center gap-8 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-6 lg:px-12 py-4 lg:py-2 max-w-7xl">
+      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-28 lg:pt-20 pb-4 lg:pb-2">
+        <div className="relative items-center gap-8 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-6 lg:px-12 py-2 lg:py-1 max-w-7xl">
           
           <div className="z-10 relative">
             <div className="inline-flex items-center gap-2 bg-[#ede8e2] mb-4 px-4 py-2 rounded-full font-black text-[#44271a] text-[11px] uppercase tracking-[0.14em]">
               <Star size={13} fill="#ed9aac" className="text-[#ed9aac]" /> Casa Solano · Cuenca
             </div>
             
-            <h1 className="max-w-3xl font-serif font-black text-[3.5rem] lg:text-[5.4rem] sm:text-6xl leading-[.9] tracking-[0.025em]">
+            <h1 className="max-w-3xl font-serif font-black text-[3.25rem] lg:text-[5rem] sm:text-6xl leading-[.88] tracking-[0.025em]">
               <span className="block text-[#ed9aac]">grab it</span>
               <span className="block text-[#bae0e3]">bite it</span>
               <span className="block text-[#ed9aac]">love it</span>
@@ -117,15 +117,15 @@ export default function Page() {
             </p>
             
             <div className="flex sm:flex-row flex-col gap-3 mt-6">
-              <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#7a2e4a] hover:bg-[#ed9aac] px-6 py-4 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-sm uppercase tracking-wide transition-colors">
+              <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#7a2e4a] hover:bg-[#ed9aac] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
                 Explorar menú <ArrowRight size={17} />
               </a>
-              <a href="https://wa.me/593999999999" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-6 py-4 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-sm uppercase tracking-wide transition-colors">
+              <a href="https://wa.me/593999999999" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
                 Pedir por WhatsApp
               </a>
             </div>
             
-            <div className="gap-4 grid grid-cols-3 mt-7 pt-4 border-[#ede8e2]/20 border-t max-w-xl font-bold text-[#ede8e2]/80 text-xs leading-4">
+            <div className="gap-4 grid grid-cols-3 mt-5 pt-3 border-[#ede8e2]/20 border-t max-w-xl font-bold text-[#ede8e2]/80 text-xs leading-4">
               <div><span className="block mb-2 font-serif text-[#ed9aac] text-2xl">01</span>Recién hechos</div>
               <div><span className="block mb-2 font-serif text-[#bae0e3] text-2xl">02</span>Dulce & salado</div>
               <div><span className="block mb-2 font-serif text-[#ed9aac] text-2xl">03</span>Muy instagrameable</div>
@@ -133,7 +133,7 @@ export default function Page() {
           </div>
 
           {/* COMPOSICIÓN IMAGEN HERO - CARRUSEL */}
-          <div className="relative mx-auto w-full max-w-[440px]">
+          <div className="relative mx-auto w-full max-w-[360px]">
             <div className="-top-4 sm:top-8 -right-4 sm:-right-8 z-20 absolute bg-[#bae0e3] shadow-black/20 shadow-lg px-5 py-4 rounded-full font-serif font-black text-[#44271a] text-lg text-center leading-4">
               hecho<br />con amor
             </div>
