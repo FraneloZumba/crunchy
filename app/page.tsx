@@ -96,20 +96,17 @@ export default function Page() {
         </div>
       </header>
 
-      {/* HERO SECTION - MODO OSCURO (CONTENIDO) */}
-      {/* La sección principal YA NO tiene el fondo marrón. */}
-      {/* Añadimos un pequeño padding superior general (pt-32) para separar del nav */}
-      <section id="inicio" className="relative px-5 lg:px-8 pt-32 lg:pt-22 pb-16 lg:pb-24">
-        
-        {/* Este es el contenedor que hace el efecto: Centrado, ancho máximo, y fondo marrón con bordes redondeados (opcional, pero suele verse mejor) */}
-        <div className="relative items-center gap-10 grid lg:grid-cols-[1.02fr_.98fr] bg-[#44271a] mx-auto px-6 lg:px-12 py-12 lg:py-5 rounded-[2rem] max-w-7xl">
+      {/* HERO SECTION */}
+      {/* El fondo marrón ocupa todo el ancho, como en la composición de referencia. */}
+      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-32 lg:pt-22 pb-16 lg:pb-24">
+        <div className="relative items-center gap-10 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-6 lg:px-12 py-12 lg:py-5 max-w-7xl">
           
           <div className="z-10 relative">
             <div className="inline-flex items-center gap-2 bg-[#ede8e2] mb-6 px-4 py-2 rounded-full font-black text-[#44271a] text-[11px] uppercase tracking-[0.14em]">
               <Star size={13} fill="#ed9aac" className="text-[#ed9aac]" /> Casa Solano · Cuenca
             </div>
             
-            <h1 className="max-w-3xl font-serif font-black text-[4rem] lg:text-[6.8rem] sm:text-7xl leading-[.9] tracking-normal">
+            <h1 className="max-w-3xl font-serif font-black text-[4rem] lg:text-[6.8rem] sm:text-7xl leading-[.9] tracking-[0.025em]">
               <span className="block text-[#ed9aac]">grab it</span>
               <span className="block text-[#bae0e3]">bite it</span>
               <span className="block text-[#ed9aac]">love it</span>
@@ -188,7 +185,7 @@ export default function Page() {
           <div className="flex sm:flex-row flex-col justify-between sm:items-end gap-6 mb-10">
             <div>
               <p className="mb-3 font-black text-[#bae0e3] text-xs uppercase tracking-[.2em]">Para cada antojo</p>
-              <h2 className="font-serif font-black text-5xl sm:text-6xl leading-none">Menú <span className="text-[#ed9aac]">Crunchy</span></h2>
+              <h2 className="font-serif font-black text-5xl sm:text-6xl leading-none tracking-[0.025em]">Menú <span className="text-[#ed9aac]">Crunchy</span></h2>
             </div>
             <div className="flex items-center gap-2 bg-white/5 px-4 py-3 border border-[#ede8e2]/20 focus-within:border-[#ed9aac] rounded-full">
               <Search size={16} className="text-[#ed9aac]" />
@@ -251,7 +248,7 @@ export default function Page() {
           <div className="lg:items-center gap-12 grid lg:grid-cols-[.85fr_1.15fr]">
             <div>
               <p className="mb-3 font-black text-[#44271a] text-xs uppercase tracking-[.2em]">Ven a conocernos</p>
-              <h2 className="font-serif font-black text-[#44271a] text-5xl sm:text-6xl leading-[.9]">
+              <h2 className="font-serif font-black text-[#44271a] text-5xl sm:text-6xl leading-[.9] tracking-[0.025em]">
                 Un lugar para<br /><span className="text-[#ed9aac]">quedarte.</span>
               </h2>
               <p className="mt-7 max-w-md text-[#44271a]/80 leading-7">
