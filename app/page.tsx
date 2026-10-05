@@ -50,7 +50,7 @@ export default function Page() {
     quantity,
   }))
 
-  const addItemToOrder = () => {
+  const addItemToOrder = (showSummary = false) => {
     if (!selectedItem) return
     setOrder((current) => ({
       ...current,
@@ -58,7 +58,7 @@ export default function Page() {
     }))
     setSelectedItem(null)
     setQuantity(1)
-    setOrderOpen(true)
+    setOrderOpen(showSummary)
   }
 
   const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}`
@@ -208,7 +208,7 @@ export default function Page() {
         <div className="mx-auto max-w-7xl">
           <div className="flex sm:flex-row flex-col justify-between sm:items-end gap-4 mb-5 sm:mb-6">
             <div>
-              <p className="mb-2 font-black text-[#bae0e3] text-[10px] uppercase tracking-[.2em]">Para cada antojo</p>
+              <p className="mb-2 font-black text-[#44271a] text-[10px] uppercase tracking-[.2em]">Para cada antojo</p>
               <h2 className="font-serif font-black text-4xl sm:text-5xl leading-none tracking-[0.025em]">Menú <span className="text-[#ed9aac]">Crunchy</span></h2>
             </div>
             <div className="flex items-center gap-2 bg-[#44271a]/5 px-3 py-2 border border-[#44271a]/20 focus-within:border-[#ed9aac] rounded-full">
@@ -244,7 +244,7 @@ export default function Page() {
 
           <div className="gap-3 sm:gap-4 grid md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (
-              <article key={item.name} className="group bg-[#ede8e2] rounded-2xl overflow-hidden text-[#44271a]">
+              <article key={item.name} className="group bg-white shadow-[4px_4px_0_#44271a] rounded-2xl overflow-hidden text-[#44271a]">
                 <div className="relative aspect-[1.35] overflow-hidden">
                   <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <span className="top-4 right-4 absolute bg-[#bae0e3] px-3 py-2 rounded-full font-black text-[#44271a] text-sm">
@@ -254,7 +254,7 @@ export default function Page() {
                 <div className="p-4">
                   <h3 className="font-serif font-black text-xl">{item.name}</h3>
                   <p className="mt-1 text-[#44271a]/80 text-xs leading-4">{item.description}</p>
-                  <button type="button" onClick={() => { setSelectedItem(item); setQuantity(1) }} className="inline-flex items-center gap-2 mt-3 font-black text-[#ed9aac] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+                  <button type="button" onClick={() => { setSelectedItem(item); setQuantity(1) }} className="inline-flex items-center gap-2 bg-[#ed9aac] hover:bg-[#44271a] mt-3 px-4 py-2 rounded-full font-black text-[#44271a] hover:text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors">
                     Pedir este <ArrowRight size={14} />
                   </button>
                 </div>
@@ -344,7 +344,10 @@ export default function Page() {
               <span className="font-serif font-black text-3xl">{quantity}</span>
               <button type="button" onClick={() => setQuantity((value) => value + 1)} className="bg-[#ed9aac] p-2 rounded-full" aria-label="Aumentar cantidad"><Plus size={18} /></button>
             </div>
-            <button type="button" onClick={addItemToOrder} className="w-full bg-[#44271a] hover:bg-[#3a5a30] px-4 py-3 rounded-full font-black text-[#ede8e2] text-xs uppercase tracking-wider transition-colors">Añadir y seguir pidiendo</button>
+            <div className="flex gap-2">
+              <button type="button" onClick={() => addItemToOrder(false)} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
+              <button type="button" onClick={() => addItemToOrder(true)} className="flex-1 bg-[#44271a] hover:bg-[#3a5a30] px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors">Pedir</button>
+            </div>
           </div>
         </div>
       )}
@@ -364,7 +367,10 @@ export default function Page() {
             {orderItems.length > 0 && <>
               <label htmlFor="customer-name" className="block mb-2 font-black text-xs uppercase tracking-wider">Pon el nombre de a quién va el pedido</label>
               <input id="customer-name" value={customerName} onChange={(event) => setCustomerName(event.target.value)} placeholder="Tu nombre" className="bg-white px-4 py-3 rounded-xl outline-none w-full text-sm" />
-              <a href={customerName.trim() ? whatsappUrl : undefined} aria-disabled={!customerName.trim()} onClick={(event) => { if (!customerName.trim()) event.preventDefault() }} className="inline-flex justify-center items-center bg-[#3a5a30] disabled:opacity-50 mt-4 px-4 py-3 rounded-full w-full font-black text-[#ede8e2] text-xs uppercase tracking-wider">Pedir por WhatsApp</a>
+              <div className="flex gap-2 mt-4">
+                <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
+                <a href={customerName.trim() ? whatsappUrl : undefined} aria-disabled={!customerName.trim()} onClick={(event) => { if (!customerName.trim()) event.preventDefault() }} className="flex flex-1 justify-center items-center bg-[#3a5a30] px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider">Pedir</a>
+              </div>
             </>}
           </div>
         </div>
