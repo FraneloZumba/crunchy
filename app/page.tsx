@@ -23,6 +23,9 @@ const heroCarousel = [images.hero1, images.hero2, images.hero3] // Array del car
 
 const categories = ['Churros de autor', 'Tostadas & salados', 'Postres & tartas', 'Bebidas & cafetería']
 
+const formatPrice = (value: number) => `$${value.toFixed(2)}`
+const parsePrice = (price: string) => Number(price.replace('$', ''))
+
 const menu = [
   { category: categories[0], name: 'Churro clásico Crunchy', description: 'Azúcar, canela y dip de manjar o chocolate belga.', price: '$3.50', image: images.napolitano },
   { category: categories[0], name: 'Churro relleno especial', description: 'Relleno abundante de manjar, Nutella o crema pastelera.', price: '$4.50', image: images.jalapeno },
@@ -50,6 +53,7 @@ export default function Page() {
     item: menu.find((entry) => entry.name === name)!,
     quantity,
   }))
+  const orderTotal = orderItems.reduce((total, { item, quantity }) => total + parsePrice(item.price) * quantity, 0)
 
   const addItemToOrder = (showSummary = false) => {
     if (!selectedItem) return
@@ -63,7 +67,7 @@ export default function Page() {
   }
 
   const paymentLabel = paymentMethod === 'transferencia' ? 'pagaré por transferencia' : 'pagaré en la puerta de mi domicilio'
-  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}. ${paymentLabel}.`
+  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}. Total: ${formatPrice(orderTotal)}. ${paymentLabel}.`
   const whatsappUrl = `https://wa.me/593999999999?text=${encodeURIComponent(whatsappMessage)}`
 
   // Estado para controlar qué imagen del hero se muestra
@@ -363,10 +367,23 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-3 my-5">
               {orderItems.length === 0 ? <p className="text-[#44271a]/70 text-sm">Todavía no has añadido productos.</p> : orderItems.map(({ item, quantity }) => (
-                <div key={item.name} className="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl text-sm"><span className="font-bold">{quantity} × {item.name}</span><span>{item.price}</span></div>
+                <div key={item.name} className="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl text-sm">
+                  <div className="min-w-0">
+                    <span className="block font-bold truncate">{item.name}</span>
+                    <span className="text-[#44271a]/70">{quantity} × {item.price} = {formatPrice(parsePrice(item.price) * quantity)}</span>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button type="button" onClick={() => setOrder((current) => quantity > 1 ? { ...current, [item.name]: quantity - 1 } : Object.fromEntries(Object.entries(current).filter(([name]) => name !== item.name)))} className="bg-[#bae0e3] p-2 rounded-full" aria-label={`Quitar una unidad de ${item.name}`}><Minus size={14} /></button>
+                    <button type="button" onClick={() => setOrder((current) => ({ ...current, [item.name]: quantity + 1 }))} className="bg-[#ed9aac] p-2 rounded-full" aria-label={`Añadir una unidad de ${item.name}`}><Plus size={14} /></button>
+                  </div>
+                </div>
               ))}
             </div>
             {orderItems.length > 0 && <>
+              <div className="flex justify-between items-center mt-2 pt-4 border-[#44271a]/20 border-t font-black text-lg">
+                <span>Total del pedido</span>
+                <span>{formatPrice(orderTotal)}</span>
+              </div>
               <label htmlFor="customer-name" className="block mb-2 font-black text-xs uppercase tracking-wider">Pon el nombre de a quién va el pedido</label>
               <input id="customer-name" value={customerName} onChange={(event) => setCustomerName(event.target.value)} placeholder="Tu nombre" className="bg-white px-4 py-3 rounded-xl outline-none w-full text-sm" />
               <fieldset className="mt-4">
