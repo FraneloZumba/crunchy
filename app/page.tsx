@@ -137,11 +137,11 @@ export default function Page() {
             <div className="relative bg-white border-[#ede8e2] border-2 rounded-full w-11 h-11 overflow-hidden">
               <Image src={images.logo} alt="Crunchy" fill className="object-cover" />
             </div>
-            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-[0.08em]">
+            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-[0.05em]">
               crunchy
             </span>
           </a>
-          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.12em]">
+          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.08em]">
             <a href="#menu" className="hover:text-[#ed9aac] transition-colors">Menú</a>
             <a href="#visitanos" className="hover:text-[#ed9aac] transition-colors">Visítanos</a>
             <a href="#horarios" className="hover:text-[#ed9aac] transition-colors">Horarios</a>
@@ -457,7 +457,7 @@ export default function Page() {
       <footer className="relative bg-[#44271a] px-5 lg:px-8 pt-20 pb-10 overflow-hidden text-[#ede8e2]">
         <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
           <div>
-            <div className="font-serif font-black text-[#ede8e2] text-5xl tracking-[0.08em]">
+            <div className="font-serif font-black text-[#ede8e2] text-5xl tracking-[0.05em]">
               crunchy<span className="text-[#ed9aac]">.</span>
             </div>
             <p className="mt-2 text-[#bae0e3] text-xs uppercase tracking-[.2em]">
@@ -465,7 +465,7 @@ export default function Page() {
             </p>
           </div>
           <div className="flex flex-col items-center sm:items-end gap-1">
-            <Image src={images.mascota} alt="Mascota Crunchy" width={150} height={150} className="object-contain" />
+            <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="object-contain mt-3" />
             <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
               <Camera size={18} /> @crunchychurros.ec
             </a>
