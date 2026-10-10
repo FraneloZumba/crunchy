@@ -17,25 +17,53 @@ const images = {
   vibe: '/vibe.jpg',
   space: '/space.jpg',
   mascota: '/mascota.png',
+  casaSolano: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-cxKbnPDLYt9LHYtTNbceB1YaHeKjJL.png',
+  galeria: Array.from({ length: 10 }, (_, index) => `/galeria${index + 1}.jpg`),
 }
 
-const heroCarousel = [images.hero1, images.hero2, images.hero3] // Array del carrusel
+const heroCarousel = [images.hero1, images.hero2, images.hero3]
 
-const categories = ['Churros de autor', 'Tostadas & salados', 'Postres & tartas', 'Bebidas & cafetería']
+const categories = ['Brunch', 'Churros', 'Postres', 'Salados', 'Calientes', 'Frías', 'Extras bebidas']
 
 const formatPrice = (value: number) => `$${value.toFixed(2)}`
 const parsePrice = (price: string) => Number(price.replace('$', ''))
 
 const menu = [
-  { category: categories[0], name: 'Churro clásico Crunchy', description: 'Azúcar, canela y dip de manjar o chocolate belga.', price: '$3.50', image: images.napolitano },
-  { category: categories[0], name: 'Churro relleno especial', description: 'Relleno abundante de manjar, Nutella o crema pastelera.', price: '$4.50', image: images.jalapeno },
-  { category: categories[0], name: 'Box Crunchy para compartir', description: 'Mini churros, toppings y salsas artesanales.', price: '$12.00', image: images.hero1 },
-  { category: categories[1], name: 'Churro Napolitano', description: 'Tomate, nueces, albahaca, orégano y mozzarella.', price: '$6.90', image: images.napolitano },
-  { category: categories[1], name: 'Churro Jalapeño', description: 'Queso crema, tomates confitados, jalapeños y orégano.', price: '$6.90', image: images.jalapeno },
-  { category: categories[2], name: 'Cheesecake de frutos rojos', description: 'Tarta artesanal con mermelada casera y almendras.', price: '$5.50', image: images.cheesecake },
-  { category: categories[2], name: 'Cheesecake Mango Coco', description: 'Cremoso, tropical y terminado con mango fresco.', price: '$5.50', image: images.cheesecake },
-  { category: categories[3], name: 'Sodas artesanales', description: 'Bebidas refrescantes, frías y llenas de color.', price: '$3.25', image: images.vibe },
-  { category: categories[3], name: 'Café de especialidad', description: 'Espresso, cappuccino, latte frío o caliente.', price: '$2.80', image: images.vibe },
+  { category: categories[0], name: 'Americano', description: 'Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.jpg' },
+  { category: categories[0], name: 'Crunchy', description: 'Pan integral de masa madre con pesto, queso, jamón, 2 huevos, tomate cherry, aguacate y mayonesa de jalapeño.', price: '$6.75', image: '/crunchy_brunch.jpg' },
+  { category: categories[1], name: 'Churro clásico', description: 'Churro clásico de 15 cm. Elige azúcar, azúcar y canela o azúcar impalpable. Dip +$1.25.', price: '$1.50', image: '/churro_clasico.jpg' },
+  { category: categories[1], name: 'Churro relleno', description: 'Churro clásico de 15 cm con relleno a elección. Topping +$0.50.', price: '$1.90', image: '/churro_relleno.jpg' },
+  { category: categories[2], name: 'Cheesecake', description: 'Elige entre frutos rojos o mango-coco.', price: '$3.85', image: '/cheesecake.jpg' },
+  { category: categories[2], name: 'Tiramisú de churro', description: 'La versión Crunchy de un clásico italiano.', price: '$3.85', image: '/tiramisu_de_churro.jpg' },
+  { category: categories[2], name: 'Parfait de churro', description: 'Yogurt griego con fruta y churros.', price: '$3.85', image: '/parfait_de_churro.jpg' },
+  { category: categories[2], name: 'Sundae de churro', description: 'Helado a elección con 2 churros y crema batida.', price: '$3.99', image: '/sundae_de_churro.jpg' },
+  { category: categories[2], name: 'Sanduche de churro', description: 'Helado a elección entre espirales de churro.', price: '$4.25', image: '/sanduche_de_churro.jpg' },
+  { category: categories[3], name: 'Churro jalapeño', description: 'Base de 2 churros, queso crema, tomates confitados, jalapeños y orégano. Picante muy bajo.', price: '$4.15', image: '/churro_jalapeno.jpg' },
+  { category: categories[3], name: 'Churro pizza', description: 'Base de 2 churros, pasta de tomate, jamón, orégano y queso mozzarella.', price: '$3.85', image: '/churro_pizza.jpg' },
+  { category: categories[3], name: 'Churro napolitano', description: 'Base de 2 churros, pasta de tomate, albahaca, orégano, nueces y queso mozzarella.', price: '$3.50', image: '/churro_napolitano.jpg' },
+  { category: categories[4], name: 'Espresso', description: 'Café espresso.', price: '$2.00', image: '/espresso.jpg' },
+  { category: categories[4], name: 'Espresso doble', description: 'Doble shot de espresso.', price: '$2.50', image: '/espresso_doble.jpg' },
+  { category: categories[4], name: 'Americano', description: 'Espresso alargado con agua caliente.', price: '$2.75', image: '/americano.jpg' },
+  { category: categories[4], name: 'Long black', description: 'Café intenso y aromático.', price: '$3.00', image: '/long_black.jpg' },
+  { category: categories[4], name: 'Cortado', description: 'Espresso con un toque de leche.', price: '$2.85', image: '/cortado.jpg' },
+  { category: categories[4], name: 'Cappuccino', description: 'Espresso, leche vaporizada y espuma.', price: '$2.95', image: '/cappuccino.jpg' },
+  { category: categories[4], name: 'Latte', description: 'Espresso con leche cremosa.', price: '$3.00', image: '/latte.jpg' },
+  { category: categories[4], name: 'Flat white', description: 'Espresso doble con microespuma.', price: '$3.00', image: '/flat_white.jpg' },
+  { category: categories[4], name: 'Mocaccino', description: 'Café, chocolate y leche.', price: '$3.99', image: '/mocaccino.jpg' },
+  { category: categories[4], name: 'Irish coffee', description: 'Café con un toque especial.', price: '$3.99', image: '/irish_coffee.jpg' },
+  { category: categories[4], name: 'Latte de churro', description: 'Latte con el sabor de nuestro churro.', price: '$3.99', image: '/latte_de_churro.jpg' },
+  { category: categories[4], name: 'Chocolate caliente', description: 'Chocolate caliente y reconfortante.', price: '$3.99', image: '/chocolate_caliente.jpg' },
+  { category: categories[4], name: 'Infusiones', description: 'Frutos rojos, manzana y canela, u orange & ginger.', price: '$2.50', image: '/infusiones.jpg' },
+  { category: categories[5], name: 'Creme brulatte', description: 'Café frío con una capa dulce y crujiente.', price: '$3.99', image: '/creme_brulatte.jpg' },
+  { category: categories[5], name: 'Limonada gaseosa', description: 'Limonada refrescante con burbujas.', price: '$3.50', image: '/limonada_gaseosa.jpg' },
+  { category: categories[5], name: 'Limonada de coco', description: 'Limonada cremosa con coco.', price: '$3.50', image: '/limonada_de_coco.jpg' },
+  { category: categories[5], name: 'Limonada frutos rojos', description: 'Limonada con frutos rojos.', price: '$3.50', image: '/limonada_frutos_rojos.jpg' },
+  { category: categories[5], name: 'Limonada clásica', description: 'Limonada recién hecha.', price: '$3.00', image: '/limonada_clasica.jpg' },
+  { category: categories[5], name: 'Jugo natural', description: 'Banano-maracuyá, fresa, maracuyá, mora, coco o mango.', price: '$3.00', image: '/jugo_natural.jpg' },
+  { category: categories[5], name: 'Smoothie', description: 'Banano-maracuyá, fresa, maracuyá, mora, coco o mango.', price: '$3.99', image: '/smoothie.jpg' },
+  { category: categories[5], name: 'Milkshake', description: 'Con helado a elección.', price: '$3.99', image: '/milkshake.jpg' },
+  { category: categories[6], name: 'Syrups', description: 'Pistacho, vainilla, caramelo salado, amaretto o licor de café.', price: '$0.50', image: '/syrups.jpg' },
+  { category: categories[6], name: 'Tipo de leche', description: 'Almendras, avena o deslactosada.', price: '$0.50', image: '/tipo_de_leche.jpg' },
 ]
 
 export default function Page() {
@@ -72,11 +100,12 @@ export default function Page() {
 
   // Estado para controlar qué imagen del hero se muestra
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0)
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0)
 
-  // Efecto para rotar las imágenes automáticamente cada 4 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroCarousel.length)
+      setCurrentGalleryIndex((prev) => (prev + 1) % images.galeria.length)
     }, 4000)
     return () => clearInterval(interval)
   }, [])
@@ -108,11 +137,11 @@ export default function Page() {
             <div className="relative bg-white border-[#ede8e2] border-2 rounded-full w-11 h-11 overflow-hidden">
               <Image src={images.logo} alt="Crunchy" fill className="object-cover" />
             </div>
-            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-tight">
+            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-[0.05em]">
               crunchy
             </span>
           </a>
-          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.12em]">
+          <nav className="hidden lg:flex items-center gap-6 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.08em]">
             <a href="#menu" className="hover:text-[#ed9aac] transition-colors">Menú</a>
             <a href="#visitanos" className="hover:text-[#ed9aac] transition-colors">Visítanos</a>
             <a href="#horarios" className="hover:text-[#ed9aac] transition-colors">Horarios</a>
@@ -291,14 +320,23 @@ export default function Page() {
                 Cómo llegar <ArrowRight size={15} />
               </a>
             </div>
-            <div className="gap-4 sm:gap-6 grid grid-cols-2">
-              <div className="relative border-[#44271a] border-2 rounded-[30px] w-full h-64 sm:h-80 overflow-hidden">
-                <Image src={images.space} alt="Interior de Crunchy" fill className="object-cover" />
-              </div>
-              <div className="relative mt-10 border-[#44271a] border-2 rounded-[30px] w-full h-64 sm:h-80 overflow-hidden">
-                <Image src={images.vibe} alt="Churro Crunchy" fill className="object-cover" />
-              </div>
-            </div>
+      <div className="relative mt-2 w-full">
+        <div className="relative border-[#44271a] border-2 rounded-[30px] w-full h-80 sm:h-[28rem] overflow-hidden">
+          {images.galeria.map((image, index) => (
+            <Image
+              key={image}
+              src={image}
+              alt={`Galería de Crunchy, imagen ${index + 1}`}
+              fill
+              className={`object-cover transition-opacity duration-[1800ms] ease-in-out ${index === currentGalleryIndex ? 'opacity-100' : 'opacity-0'}`}
+              priority={index === 0}
+            />
+          ))}
+          <div className="right-4 bottom-4 absolute bg-[#ede8e2]/90 px-3 py-1 rounded-full font-black text-[#44271a] text-xs">
+            {String(currentGalleryIndex + 1).padStart(2, '0')} / 10
+          </div>
+        </div>
+      </div>
           </div>
         </div>
       </section>
@@ -307,12 +345,19 @@ export default function Page() {
       <section id="horarios" className="bg-[#ede8e2] px-5 lg:px-8 py-20 lg:py-28">
         <div className="gap-5 grid md:grid-cols-2 mx-auto max-w-7xl">
           <div className="bg-[#ed9aac] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
-            <MapPin className="mb-8 text-[#44271a]" size={28} />
-            <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
-            <p className="mt-3 text-[#44271a]/80">Cuenca, Ecuador</p>
-            <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
-              Abrir en Maps <ArrowRight size={14} />
-            </a>
+            <div className="flex sm:flex-row flex-col items-start gap-6">
+              <div className="relative border-[#44271a] border-2 rounded-2xl w-full sm:w-36 h-48 overflow-hidden shrink-0">
+                <Image src={images.casaSolano} alt="Calle de Casa Solano en Cuenca, Ecuador" fill className="object-cover" />
+              </div>
+              <div>
+                <MapPin className="mb-8 text-[#44271a]" size={28} />
+                <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
+                <p className="mt-3 text-[#44271a]/80">Cuenca, Ecuador</p>
+                <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+                  Abrir en Maps <ArrowRight size={14} />
+                </a>
+              </div>
+            </div>
           </div>
           <div className="bg-white shadow-[8px_8px_0_#44271a] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
             <div className="flex items-center gap-3 mb-7">
@@ -410,22 +455,21 @@ export default function Page() {
 
       {/* FOOTER CON MASCOTA */}
       <footer className="relative bg-[#44271a] px-5 lg:px-8 pt-20 pb-10 overflow-hidden text-[#ede8e2]">
-        <div className="right-5 sm:right-20 lg:right-40 -bottom-10 absolute opacity-90">
-           <Image src={images.mascota} alt="Mascota Crunchy" width={200} height={200} className="object-contain" />
-        </div>
-        
         <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
           <div>
-            <div className="font-serif font-black text-[#ede8e2] text-5xl">
+            <div className="font-serif font-black text-[#ede8e2] text-5xl tracking-[0.05em]">
               crunchy<span className="text-[#ed9aac]">.</span>
             </div>
             <p className="mt-2 text-[#bae0e3] text-xs uppercase tracking-[.2em]">
               Grab it · Bite it · Love it
             </p>
           </div>
-          <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
-            <Camera size={18} /> @crunchychurros.ec
-          </a>
+          <div className="flex flex-col items-center sm:items-end gap-1">
+            <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="object-contain mt-3" />
+            <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
+              <Camera size={18} /> @crunchychurros.ec
+            </a>
+          </div>
         </div>
         
         <div className="z-10 relative mx-auto max-w-7xl text-[#ede8e2]/50 text-xs">
