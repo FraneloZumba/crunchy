@@ -17,6 +17,7 @@ const images = {
   vibe: '/vibe.jpg',
   space: '/space.jpg',
   mascota: '/mascota.png',
+  casaSolano: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-cxKbnPDLYt9LHYtTNbceB1YaHeKjJL.png',
   galeria: Array.from({ length: 10 }, (_, index) => `/galeria${index + 1}.jpg`),
 }
 
@@ -136,7 +137,7 @@ export default function Page() {
             <div className="relative bg-white border-[#ede8e2] border-2 rounded-full w-11 h-11 overflow-hidden">
               <Image src={images.logo} alt="Crunchy" fill className="object-cover" />
             </div>
-            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-tight">
+            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-[0.08em]">
               crunchy
             </span>
           </a>
@@ -344,12 +345,19 @@ export default function Page() {
       <section id="horarios" className="bg-[#ede8e2] px-5 lg:px-8 py-20 lg:py-28">
         <div className="gap-5 grid md:grid-cols-2 mx-auto max-w-7xl">
           <div className="bg-[#ed9aac] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
-            <MapPin className="mb-8 text-[#44271a]" size={28} />
-            <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
-            <p className="mt-3 text-[#44271a]/80">Cuenca, Ecuador</p>
-            <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
-              Abrir en Maps <ArrowRight size={14} />
-            </a>
+            <div className="flex sm:flex-row flex-col items-start gap-6">
+              <div className="relative border-[#44271a] border-2 rounded-2xl w-full sm:w-36 h-48 overflow-hidden shrink-0">
+                <Image src={images.casaSolano} alt="Calle de Casa Solano en Cuenca, Ecuador" fill className="object-cover" />
+              </div>
+              <div>
+                <MapPin className="mb-8 text-[#44271a]" size={28} />
+                <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
+                <p className="mt-3 text-[#44271a]/80">Cuenca, Ecuador</p>
+                <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+                  Abrir en Maps <ArrowRight size={14} />
+                </a>
+              </div>
+            </div>
           </div>
           <div className="bg-white shadow-[8px_8px_0_#44271a] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
             <div className="flex items-center gap-3 mb-7">
@@ -447,22 +455,21 @@ export default function Page() {
 
       {/* FOOTER CON MASCOTA */}
       <footer className="relative bg-[#44271a] px-5 lg:px-8 pt-20 pb-10 overflow-hidden text-[#ede8e2]">
-        <div className="right-5 sm:right-20 lg:right-40 -bottom-10 absolute opacity-90">
-           <Image src={images.mascota} alt="Mascota Crunchy" width={200} height={200} className="object-contain" />
-        </div>
-        
         <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
           <div>
-            <div className="font-serif font-black text-[#ede8e2] text-5xl">
+            <div className="font-serif font-black text-[#ede8e2] text-5xl tracking-[0.08em]">
               crunchy<span className="text-[#ed9aac]">.</span>
             </div>
             <p className="mt-2 text-[#bae0e3] text-xs uppercase tracking-[.2em]">
               Grab it · Bite it · Love it
             </p>
           </div>
-          <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
-            <Camera size={18} /> @crunchychurros.ec
-          </a>
+          <div className="flex flex-col items-center sm:items-end gap-1">
+            <Image src={images.mascota} alt="Mascota Crunchy" width={150} height={150} className="object-contain" />
+            <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
+              <Camera size={18} /> @crunchychurros.ec
+            </a>
+          </div>
         </div>
         
         <div className="z-10 relative mx-auto max-w-7xl text-[#ede8e2]/50 text-xs">
