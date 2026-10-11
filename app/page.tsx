@@ -53,7 +53,43 @@ hotDrinks.forEach((name) => {
 
 const formatPrice = (value: number) => `$${value.toFixed(2)}`
 const parsePrice = (price: string) => Number(price.replace('$', ''))
+
+const fallbackImages: Record<string, string> = {
+  '/tiramisu_de_churro.jpg': 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80',
+  '/parfait_de_churro.jpg': 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80',
+  '/sundae_de_churro.jpg': 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=80',
+  '/churro_pizza.jpg': 'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80',
+  '/espresso.jpg': 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=900&q=80',
+  '/espresso_doble.jpg': 'https://images.unsplash.com/photo-1551030173-122aabc4489c?auto=format&fit=crop&w=900&q=80',
+  '/americano.jpg': 'https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=900&q=80',
+  '/long_black.jpg': 'https://images.unsplash.com/photo-1497515114629-f71d768fd07c?auto=format&fit=crop&w=900&q=80',
+  '/cortado.jpg': 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=900&q=80',
+  '/cappuccino.jpg': 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=900&q=80',
+  '/latte.jpg': 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=80',
+  '/flat_white.jpg': 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=900&q=80',
+  '/mocaccino.jpg': 'https://images.unsplash.com/photo-1578374173705-969c8e8f2f7d?auto=format&fit=crop&w=900&q=80',
+  '/irish_coffee.jpg': 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=900&q=80',
+  '/latte_de_churro.jpg': 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=900&q=80',
+  '/chocolate_caliente.jpg': 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=900&q=80',
+  '/infusiones.jpg': 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=80',
+  '/creme_brulatte.jpg': 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=900&q=80',
+  '/limonada_gaseosa.jpg': 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80',
+  '/limonada_de_coco.jpg': 'https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=900&q=80',
+  '/limonada_frutos_rojos.jpg': 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80',
+  '/limonada_clasica.jpg': 'https://images.unsplash.com/photo-1523677011781-c91d1bbe2fbb?auto=format&fit=crop&w=900&q=80',
+  '/jugo_natural.jpg': 'https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=900&q=80',
+  '/smoothie.jpg': 'https://images.unsplash.com/photo-1553530666-ba11a90a0868?auto=format&fit=crop&w=900&q=80',
+  '/milkshake.jpg': 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=900&q=80',
+  '/syrups.jpg': 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80',
+  '/tipo_de_leche.jpg': 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=900&q=80',
+}
+
 const getOptions = (item: (typeof menu)[number]) => optionGroups[item.name] ?? []
+
+function MenuImage({ src, alt }: { src: string; alt: string }) {
+  const [imageSrc, setImageSrc] = useState(src)
+  return <img src={imageSrc} alt={alt} onError={() => setImageSrc(fallbackImages[src] ?? '/hero1.jpg')} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+}
 
 const menu = [
   { category: categories[0], name: 'Brunch Americano', description: 'Incluye: Café americano, cappuccino o infusión. Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.jpg' },
@@ -110,7 +146,12 @@ export default function Page() {
 
   const addItemToOrder = (showSummary = false) => {
     if (!selectedItem) return
-    const optionPrice = getOptions(selectedItem).reduce((total, group) => selectedOptions.some((option) => group.options.includes(option) && option !== group.options[0]) ? total + group.price : total, 0)
+    const optionPrice = getOptions(selectedItem).reduce((total, group) => {
+      const selectedOption = selectedOptions.find((option) => group.options.includes(option))
+      if (!selectedOption) return total
+      const isFreeDefault = selectedOption === group.options[0] && !group.label.toLowerCase().includes('topping')
+      return total + (isFreeDefault ? 0 : group.price)
+    }, 0)
     const unitPrice = parsePrice(selectedItem.price) + optionPrice
     const key = `${selectedItem.name} · ${selectedOptions.join(', ')}`
     setOrder((current) => ({ ...current, [key]: { item: selectedItem, quantity: (current[key]?.quantity ?? 0) + quantity, options: selectedOptions, unitPrice } }))
@@ -121,7 +162,7 @@ export default function Page() {
   }
 
   const paymentLabel = paymentMethod === 'transferencia' ? 'transferencia' : paymentMethod === 'deuna' ? 'DeUna' : 'la puerta de mi domicilio'
-  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir:\n\n${orderItems.map(({ item, quantity, options }) => `${quantity}. ${item.name}${options.length ? ` (${options.join(', ')})` : ''} — ${formatPrice(parsePrice(item.price))}`).join('\\n') }\n\nEl precio estimado es de ${formatPrice(orderTotal)}. Pagaré por ${paymentLabel}.\n\nPrecio aproximado (se debate costos de envío y de packaging)`
+  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir:\n\n${orderItems.map(({ item, quantity, options, unitPrice }) => `${quantity}. ${item.name}${options.length ? ` (${options.join(', ')})` : ''} — ${formatPrice(unitPrice * quantity)}`).join('\\n') }\n\nEl precio estimado es de ${formatPrice(orderTotal)}. Pagaré por ${paymentLabel}.\n\nPrecio aproximado (se debate costos de envío y de packaging)`
   const whatsappUrl = `https://wa.me/593989998834?text=${encodeURIComponent(whatsappMessage)}`
 
   // Estado para controlar qué imagen del hero se muestra
@@ -198,7 +239,7 @@ export default function Page() {
             
             <div className="flex sm:flex-row flex-col gap-3 mt-6">
               <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#7a2e4a] hover:bg-[#ed9aac] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
-                Explorar menú <ArrowRight size={17} />
+                Explorar men�� <ArrowRight size={17} />
               </a>
               <a href="https://wa.me/593989998834" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
                 Pedir por WhatsApp
@@ -296,14 +337,14 @@ export default function Page() {
                 <span className="opacity-60 mr-2">0{index + 1}</span>{category}
               </button>
             ))}
-            {comingSoonCategories.map((category, index) => <button key={category} type="button" onClick={() => window.alert('PROXIMAMENTE...!')} className="whitespace-nowrap rounded-full border border-[#7a2e4a]/40 px-3 py-2 text-[10px] font-black uppercase tracking-wider text-[#7a2e4a] hover:bg-[#7a2e4a] hover:text-[#ede8e2] transition-colors"><span className="opacity-60 mr-2">0{categories.length + index + 1}</span>{category}</button>)}
+            {comingSoonCategories.map((category, index) => <button key={category} type="button" onClick={() => setActiveCategory(category)} className={`whitespace-nowrap rounded-full border px-3 py-2 text-[10px] font-black uppercase tracking-wider transition-colors ${activeCategory === category ? 'bg-[#ed9aac] text-[#44271a] border-[#ed9aac]' : 'border-[#7a2e4a]/40 text-[#7a2e4a] hover:bg-[#7a2e4a] hover:text-[#ede8e2]'}`}><span className="opacity-60 mr-2">0{categories.length + index + 1}</span>{category}</button>)}
           </div>
 
           <div className="gap-3 sm:gap-4 grid md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (
               <article key={item.name} className="group bg-white shadow-[4px_4px_0_#44271a] rounded-2xl overflow-hidden text-[#44271a]">
                 <div className="relative aspect-[1.35] overflow-hidden">
-                  <Image src={item.image} alt={item.name} fill onError={(event) => { event.currentTarget.src = '/hero1.jpg' }} className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <MenuImage src={item.image} alt={item.name} />
                   <span className="top-4 right-4 absolute bg-[#bae0e3] px-3 py-2 rounded-full font-black text-[#44271a] text-sm">
                     {item.price}
                   </span>
@@ -318,9 +359,10 @@ export default function Page() {
               </article>
             ))}
             {filtered.length === 0 && (
-              <p className="col-span-full p-10 border border-[#ede8e2]/10 rounded-3xl text-[#ede8e2]/70 text-center">
-                No encontramos ese antojo. Prueba otra búsqueda.
-              </p>
+              <div className="col-span-full flex flex-col justify-center items-center p-14 border border-[#ede8e2]/10 rounded-3xl text-center">
+                <p className="font-serif font-black text-[#ed9aac] text-4xl">Próximamente</p>
+                <p className="mt-2 text-[#ede8e2]/70 text-sm">Estamos preparando esta sección para ti.</p>
+              </div>
             )}
           </div>
         </div>
