@@ -519,7 +519,17 @@ export default function Page() {
               </fieldset>
               <div className="flex gap-2 mt-4">
                 <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
-                <a href={customerName.trim() && paymentMethod ? whatsappUrl : undefined} aria-disabled={!customerName.trim() || !paymentMethod} onClick={(event) => { if (!customerName.trim() || !paymentMethod) event.preventDefault() }} className="flex flex-1 justify-center items-center bg-[#3a5a30] px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider">Pedir por WhatsApp</a>
+                <button
+                  type="button"
+                  disabled={!customerName.trim() || !paymentMethod}
+                  onClick={() => {
+                    if (!customerName.trim() || !paymentMethod) return
+                    window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+                  }}
+                  className="flex flex-1 justify-center items-center bg-[#3a5a30] hover:bg-[#2d4725] disabled:opacity-40 disabled:cursor-not-allowed px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors"
+                >
+                  Pedir por WhatsApp
+                </button>
               </div>
             </>}
           </div>
