@@ -239,7 +239,7 @@ export default function Page() {
             
             <div className="flex sm:flex-row flex-col gap-3 mt-6">
               <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#7a2e4a] hover:bg-[#ed9aac] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
-                Explorar men�� <ArrowRight size={17} />
+                Explorar Menú <ArrowRight size={17} />
               </a>
               <a href="https://wa.me/593989998834" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
                 Pedir por WhatsApp
