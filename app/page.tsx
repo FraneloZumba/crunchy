@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 // Nota Fran: Añadí hero1, hero2 y hero3 para el carrusel
 const images = {
-  logo: '/logo.png',
+  logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Crunchy_Logo-28-l3vThOtZ7yTFTwUjM17dXSe7BrIwtB.png',
   texturaNav: '/textura1.png',
   hero1: '/hero1.jpg', 
   hero2: '/hero2.jpg', 
@@ -133,13 +133,8 @@ export default function Page() {
         
         <div className="relative flex justify-between items-center mx-auto px-5 lg:px-8 py-4 max-w-7xl">
           {/* ... resto del contenido del nav se mantiene igual ... */}
-          <a href="#inicio" className="flex items-center gap-2" aria-label="Crunchy inicio">
-            <div className="relative bg-white border-[#ede8e2] border-2 rounded-full w-11 h-11 overflow-hidden">
-              <Image src={images.logo} alt="Crunchy" fill className="object-cover" />
-            </div>
-            <span className="font-serif font-black text-[#ede8e2] text-2xl tracking-[0.05em]">
-              crunchy
-            </span>
+          <a href="#inicio" className="flex items-center" aria-label="Crunchy inicio">
+            <Image src={images.logo} alt="Crunchy" width={128} height={56} className="w-32 h-auto object-contain" priority />
           </a>
           <nav className="hidden lg:flex items-center gap-6 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.08em]">
             <a href="#menu" className="hover:text-[#ed9aac] transition-colors">Menú</a>
@@ -157,7 +152,7 @@ export default function Page() {
 
       {/* HERO SECTION */}
       {/* El fondo marrón ocupa todo el ancho, como en la composición de referencia. */}
-      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-28 lg:pt-20 pb-4 lg:pb-2">
+      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-28 lg:pt-22 pb-4 lg:pb-2">
         <div className="relative items-center gap-8 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-6 lg:px-12 py-2 lg:py-1 max-w-7xl">
           
           <div className="z-10 relative">
@@ -457,12 +452,7 @@ export default function Page() {
       <footer className="relative bg-[#44271a] px-5 lg:px-8 pt-20 pb-10 overflow-hidden text-[#ede8e2]">
         <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
           <div>
-            <div className="font-serif font-black text-[#ede8e2] text-5xl tracking-[0.05em]">
-              crunchy<span className="text-[#ed9aac]">.</span>
-            </div>
-            <p className="mt-2 text-[#bae0e3] text-xs uppercase tracking-[.2em]">
-              Grab it · Bite it · Love it
-            </p>
+          <Image src={images.logo} alt="Crunchy" width={220} height={96} className="w-52 h-auto object-contain" />
           </div>
           <div className="flex flex-col items-center sm:items-end gap-1">
             <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="object-contain mt-3" />
