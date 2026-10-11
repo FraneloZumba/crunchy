@@ -29,8 +29,8 @@ const formatPrice = (value: number) => `$${value.toFixed(2)}`
 const parsePrice = (price: string) => Number(price.replace('$', ''))
 
 const menu = [
-  { category: categories[0], name: 'Americano', description: 'Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.jpg' },
-  { category: categories[0], name: 'Crunchy', description: 'Pan integral de masa madre con pesto, queso, jamón, 2 huevos, tomate cherry, aguacate y mayonesa de jalapeño.', price: '$6.75', image: '/crunchy_brunch.jpg' },
+  { category: categories[0], name: 'Brunch Americano', description: 'Incluye: Café americano, cappuccino o infusión. Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.jpg' },
+  { category: categories[0], name: 'Brunch Crunchy', description: 'Incluye: Café americano, cappuccino o infusión. Pan integral de masa madre con pesto, queso, jamón, 2 huevos, tomate cherry, aguacate y mayonesa de jalapeño.', price: '$6.75', image: '/crunchy_brunch.jpg' },
   { category: categories[1], name: 'Churro clásico', description: 'Churro clásico de 15 cm. Elige azúcar, azúcar y canela o azúcar impalpable. Dip +$1.25.', price: '$1.50', image: '/churro_clasico.jpg' },
   { category: categories[1], name: 'Churro relleno', description: 'Churro clásico de 15 cm con relleno a elección. Topping +$0.50.', price: '$1.90', image: '/churro_relleno.jpg' },
   { category: categories[2], name: 'Cheesecake', description: 'Elige entre frutos rojos o mango-coco.', price: '$3.85', image: '/cheesecake.jpg' },
