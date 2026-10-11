@@ -152,7 +152,7 @@ export default function Page() {
 
       {/* HERO SECTION */}
       {/* El fondo marrón ocupa todo el ancho, como en la composición de referencia. */}
-      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-28 lg:pt-20 pb-4 lg:pb-2">
+      <section id="inicio" className="relative bg-[#44271a] px-5 lg:px-8 pt-28 lg:pt-22 pb-4 lg:pb-2">
         <div className="relative items-center gap-8 grid lg:grid-cols-[1.02fr_.98fr] mx-auto px-6 lg:px-12 py-2 lg:py-1 max-w-7xl">
           
           <div className="z-10 relative">
