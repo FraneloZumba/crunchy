@@ -132,7 +132,7 @@ const menu = [
 export default function Page() {
   const [activeCategory, setActiveCategory] = useState(categories[0])
   const [query, setQuery] = useState('')
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(true)
   const [order, setOrder] = useState<Record<string, { item: (typeof menu)[number]; quantity: number; options: string[]; unitPrice: number }>>({})
   const [selectedItem, setSelectedItem] = useState<(typeof menu)[number] | null>(null)
   const [quantity, setQuantity] = useState(1)
