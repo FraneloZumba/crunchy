@@ -453,9 +453,6 @@ export default function Page() {
         <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
           <div>
           <Image src={images.logo} alt="Crunchy" width={220} height={96} className="w-52 h-auto object-contain" />
-            <p className="mt-2 text-[#bae0e3] text-xs uppercase tracking-[.2em]">
-              Grab it · Bite it · Love it
-            </p>
           </div>
           <div className="flex flex-col items-center sm:items-end gap-1">
             <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="object-contain mt-3" />
