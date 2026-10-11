@@ -317,9 +317,6 @@ export default function Page() {
                 placeholder="Buscar..." 
                 className="bg-transparent outline-none w-28 sm:w-40 text-[#44271a] placeholder:text-[#44271a]/50 text-sm" 
               />
-              <button type="button" onClick={() => setOrderOpen(true)} className="inline-flex items-center gap-2 bg-[#3a5a30] px-3 py-2 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider">
-                <Check size={14} /> Pedido {orderItems.length > 0 ? `(${orderItems.length})` : ''}
-              </button>
             </div>
           </div>
 
