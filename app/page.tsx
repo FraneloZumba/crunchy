@@ -96,7 +96,7 @@ export default function Page() {
 
   const paymentLabel = paymentMethod === 'transferencia' ? 'pagaré por transferencia' : 'pagaré en la puerta de mi domicilio'
   const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}. Total: ${formatPrice(orderTotal)}. ${paymentLabel}.`
-  const whatsappUrl = `https://wa.me/593999999999?text=${encodeURIComponent(whatsappMessage)}`
+  const whatsappUrl = `https://wa.me/593989998834?text=${encodeURIComponent(whatsappMessage)}`
 
   // Estado para controlar qué imagen del hero se muestra
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0)
@@ -141,7 +141,7 @@ export default function Page() {
             <a href="#visitanos" className="hover:text-[#ed9aac] transition-colors">Visítanos</a>
             <a href="#horarios" className="hover:text-[#ed9aac] transition-colors">Horarios</a>
           </nav>
-          <a href="https://wa.me/593999999999" className="hidden sm:block bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
+          <a href="https://wa.me/593989998834" className="hidden sm:block bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
             Pedir por WhatsApp
           </a>
           <button className="lg:hidden bg-[#ed9aac] p-2 rounded-full text-[#44271a]" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}>
@@ -174,7 +174,7 @@ export default function Page() {
               <a href="#menu" className="inline-flex justify-center items-center gap-3 bg-[#7a2e4a] hover:bg-[#ed9aac] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
                 Explorar menú <ArrowRight size={17} />
               </a>
-              <a href="https://wa.me/593999999999" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
+              <a href="https://wa.me/593989998834" className="inline-flex justify-center items-center bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wide transition-colors">
                 Pedir por WhatsApp
               </a>
             </div>
@@ -284,7 +284,7 @@ export default function Page() {
                 <div className="p-4">
                   <h3 className="font-serif font-black text-xl">{item.name}</h3>
                   <p className="mt-1 text-[#44271a]/80 text-xs leading-4">{item.description}</p>
-                  <button type="button" onClick={() => { setSelectedItem(item); setQuantity(1) }} className="inline-flex items-center gap-2 bg-[#ed9aac] hover:bg-[#44271a] mt-3 px-4 py-2 rounded-full font-black text-[#44271a] hover:text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors">
+                  <button type="button" onClick={() => { setSelectedItem(item); setQuantity(1) }} className="inline-flex items-center gap-2 bg-[#ed9aac] hover:bg-[#44271a] mt-3 px-4 py-2 rounded-full font-black text-[#44271a] text-[10px] hover:text-[#ede8e2] uppercase tracking-wider transition-colors">
                     Pedir este <ArrowRight size={14} />
                   </button>
                 </div>
@@ -383,7 +383,7 @@ export default function Page() {
                 <h2 id="quantity-title" className="font-serif font-black text-2xl leading-none">{selectedItem.name}</h2>
                 <p className="mt-2 text-[#44271a]/70 text-sm">{selectedItem.price}</p>
               </div>
-              <button type="button" onClick={() => setSelectedItem(null)} className="p-2 rounded-full hover:bg-[#44271a]/10" aria-label="Cerrar"><X size={18} /></button>
+              <button type="button" onClick={() => setSelectedItem(null)} className="hover:bg-[#44271a]/10 p-2 rounded-full" aria-label="Cerrar"><X size={18} /></button>
             </div>
             <div className="flex justify-center items-center gap-5 my-7">
               <button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="bg-[#bae0e3] p-2 rounded-full" aria-label="Reducir cantidad"><Minus size={18} /></button>
@@ -403,7 +403,7 @@ export default function Page() {
           <div className="bg-[#ede8e2] shadow-2xl p-6 rounded-3xl w-full max-w-md text-[#44271a]">
             <div className="flex justify-between items-start gap-4">
               <div><p className="mb-1 font-black text-[#ed9aac] text-[10px] uppercase tracking-widest">Tu pedido</p><h2 id="order-title" className="font-serif font-black text-3xl">Arma tu pedido</h2></div>
-              <button type="button" onClick={() => setOrderOpen(false)} className="p-2 rounded-full hover:bg-[#44271a]/10" aria-label="Cerrar"><X size={18} /></button>
+              <button type="button" onClick={() => setOrderOpen(false)} className="hover:bg-[#44271a]/10 p-2 rounded-full" aria-label="Cerrar"><X size={18} /></button>
             </div>
             <div className="flex flex-col gap-3 my-5">
               {orderItems.length === 0 ? <p className="text-[#44271a]/70 text-sm">Todavía no has añadido productos.</p> : orderItems.map(({ item, quantity }) => (
@@ -455,7 +455,7 @@ export default function Page() {
           <Image src={images.logo} alt="Crunchy" width={220} height={96} className="w-52 h-auto object-contain" />
           </div>
           <div className="flex flex-col items-center sm:items-end gap-1">
-            <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="object-contain mt-3" />
+            <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="mt-3 object-contain" />
             <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
               <Camera size={18} /> @crunchychurros.ec
             </a>
