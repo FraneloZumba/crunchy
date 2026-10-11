@@ -211,10 +211,31 @@ export default function Page() {
           <a href="https://wa.me/593989998834" className="hidden sm:block bg-[#3a5a30] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
             Pedir por WhatsApp
           </a>
-          <button className="lg:hidden bg-[#ed9aac] p-2 rounded-full text-[#44271a]" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}>
+          <button
+            type="button"
+            className="lg:hidden bg-[#ed9aac] p-2 rounded-full text-[#44271a]"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation"
+          >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
+        {mobileOpen && (
+          <nav
+            id="mobile-navigation"
+            aria-label="Navegación móvil"
+            className="lg:hidden relative border-[#ede8e2]/20 border-t bg-[#44271a] px-5 py-4 shadow-lg"
+          >
+            <div className="flex flex-col gap-3 font-bold text-[#ede8e2] text-xs uppercase tracking-[0.08em]">
+              <a href="#menu" onClick={() => setMobileOpen(false)} className="rounded-lg px-3 py-3 hover:bg-[#7a2e4a] transition-colors">Menú</a>
+              <a href="#visitanos" onClick={() => setMobileOpen(false)} className="rounded-lg px-3 py-3 hover:bg-[#7a2e4a] transition-colors">Visítanos</a>
+              <a href="#horarios" onClick={() => setMobileOpen(false)} className="rounded-lg px-3 py-3 hover:bg-[#7a2e4a] transition-colors">Horarios</a>
+              <a href="https://wa.me/593989998834" onClick={() => setMobileOpen(false)} className="bg-[#3a5a30] px-3 py-3 rounded-lg text-center hover:bg-[#bae0e3] hover:text-[#44271a] transition-colors">Pedir por WhatsApp</a>
+            </div>
+          </nav>
+        )}
       </header>
 
       {/* HERO SECTION */}
