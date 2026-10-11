@@ -347,7 +347,7 @@ export default function Page() {
               <div>
                 <MapPin className="mb-8 text-[#44271a]" size={28} />
                 <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
-                <p className="mt-3 text-[#44271a]/80">Cuenca, Ecuador</p>
+                <p className="mt-3 text-[#44271a]/80">Gonzalo Cordero y Av. Solano - Cuenca, Ecuador</p>
                 <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
                   Abrir en Maps <ArrowRight size={14} />
                 </a>
