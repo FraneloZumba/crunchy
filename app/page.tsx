@@ -162,7 +162,7 @@ export default function Page() {
   }
 
   const paymentLabel = paymentMethod === 'transferencia' ? 'transferencia' : paymentMethod === 'deuna' ? 'DeUna' : 'la puerta de mi domicilio'
-  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir:\n${orderItems.map(({ item, quantity, options }, index) => `${index + 1}. ${quantity > 1 ? `${quantity}x ` : ''}${item.name}${options.length ? ` (${options.join(', ')})` : ''}`).join('\\n')}\nEl precio estimado de la página es de ${formatPrice(orderTotal)} Y pagaré por ${paymentLabel}.`
+  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir:\n\n${orderItems.map(({ item, quantity, options }, index) => `${index + 1}. ${quantity > 1 ? `${quantity}x ` : ''}${item.name}${options.length ? ` (${options.join(', ')})` : ''}`).join('\n')}\n\nEl precio estimado de la página es de ${formatPrice(orderTotal)} Y pagaré por ${paymentLabel}.`
   const whatsappUrl = `https://wa.me/593989998834?text=${encodeURIComponent(whatsappMessage)}`
 
   // Estado para controlar qué imagen del hero se muestra
