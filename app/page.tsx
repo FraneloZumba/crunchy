@@ -23,10 +23,37 @@ const images = {
 
 const heroCarousel = [images.hero1, images.hero2, images.hero3]
 
-const categories = ['Brunch', 'Churros', 'Postres', 'Salados', 'Calientes', 'Frías', 'Extras bebidas']
+const categories = ['Brunch', 'Churros', 'Postres', 'Salados', 'Calientes', 'Frías']
+const comingSoonCategories = ['Combos', 'Actividades']
+
+const optionGroups: Record<string, { label: string; price: number; options: string[] }[]> = {
+  'Churro clásico': [
+    { label: 'Cobertura', price: 0, options: ['Azúcar', 'Azúcar y canela', 'Azúcar impalpable'] },
+    { label: 'Dip (+$1.25)', price: 1.25, options: ['Sin dip', 'Dip'] },
+  ],
+  'Churro relleno': [
+    { label: 'Relleno', price: 0, options: ['Crema de café', 'Frutos rojos', 'Mango coco', 'Dulce de leche', 'Chocolate', 'Chocolate blanco', 'Crema de maracuyá'] },
+    { label: 'Topping (+$0.50)', price: 0.5, options: Array.from({ length: 21 }, (_, index) => `Topping${index + 1}`) },
+  ],
+  Cheesecake: [{ label: 'Sabor', price: 0, options: ['Frutos rojos', 'Mango coco'] }],
+  'Sundae de churro': [{ label: 'Helado', price: 0, options: ['Vainilla', 'Chocolate', 'Oreo'] }],
+  'Sanduche de churro': [{ label: 'Helado', price: 0, options: ['Vainilla', 'Chocolate', 'Oreo'] }],
+  Cappuccino: [{ label: 'Tipo de leche (+$0.50)', price: 0.5, options: ['Leche entera', 'Leche de almendras', 'Leche de avena', 'Leche deslactosada'] }],
+  Latte: [{ label: 'Tipo de leche (+$0.50)', price: 0.5, options: ['Leche entera', 'Leche de almendras', 'Leche de avena', 'Leche deslactosada'] }],
+  'Flat white': [{ label: 'Tipo de leche (+$0.50)', price: 0.5, options: ['Leche entera', 'Leche de almendras', 'Leche de avena', 'Leche deslactosada'] }],
+  Mocaccino: [{ label: 'Tipo de leche (+$0.50)', price: 0.5, options: ['Leche entera', 'Leche de almendras', 'Leche de avena', 'Leche deslactosada'] }],
+  'Latte de churro': [{ label: 'Tipo de leche (+$0.50)', price: 0.5, options: ['Leche entera', 'Leche de almendras', 'Leche de avena', 'Leche deslactosada'] }],
+  'Chocolate caliente': [{ label: 'Tipo de leche (+$0.50)', price: 0.5, options: ['Leche entera', 'Leche de almendras', 'Leche de avena', 'Leche deslactosada'] }],
+}
+const syrupOptions = ['Pistacho', 'Vainilla', 'Caramelo salado', 'Amaretto', 'Licor de café']
+const hotDrinks = ['Espresso', 'Espresso doble', 'Americano', 'Long black', 'Cortado', 'Cappuccino', 'Latte', 'Flat white', 'Mocaccino', 'Irish coffee', 'Latte de churro', 'Chocolate caliente']
+hotDrinks.forEach((name) => {
+  if (name !== 'Infusiones' && !optionGroups[name]) optionGroups[name] = [{ label: 'Syrup (+$0.50)', price: 0.5, options: ['Sin syrup', ...syrupOptions] }]
+})
 
 const formatPrice = (value: number) => `$${value.toFixed(2)}`
 const parsePrice = (price: string) => Number(price.replace('$', ''))
+const getOptions = (item: (typeof menu)[number]) => optionGroups[item.name] ?? []
 
 const menu = [
   { category: categories[0], name: 'Brunch Americano', description: 'Incluye: Café americano, cappuccino o infusión. Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.jpg' },
@@ -70,32 +97,31 @@ export default function Page() {
   const [activeCategory, setActiveCategory] = useState(categories[0])
   const [query, setQuery] = useState('')
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [order, setOrder] = useState<Record<string, number>>({})
+  const [order, setOrder] = useState<Record<string, { item: (typeof menu)[number]; quantity: number; options: string[]; unitPrice: number }>>({})
   const [selectedItem, setSelectedItem] = useState<(typeof menu)[number] | null>(null)
   const [quantity, setQuantity] = useState(1)
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [orderOpen, setOrderOpen] = useState(false)
   const [customerName, setCustomerName] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState<'transferencia' | 'puerta' | ''>('')
+  const [paymentMethod, setPaymentMethod] = useState<'transferencia' | 'puerta' | 'deuna' | ''>('')
 
-  const orderItems = Object.entries(order).map(([name, quantity]) => ({
-    item: menu.find((entry) => entry.name === name)!,
-    quantity,
-  }))
-  const orderTotal = orderItems.reduce((total, { item, quantity }) => total + parsePrice(item.price) * quantity, 0)
+  const orderItems = Object.entries(order).map(([key, value]) => ({ key, ...value }))
+  const orderTotal = orderItems.reduce((total, { unitPrice, quantity }) => total + unitPrice * quantity, 0)
 
   const addItemToOrder = (showSummary = false) => {
     if (!selectedItem) return
-    setOrder((current) => ({
-      ...current,
-      [selectedItem.name]: (current[selectedItem.name] ?? 0) + quantity,
-    }))
+    const optionPrice = getOptions(selectedItem).reduce((total, group) => selectedOptions.some((option) => group.options.includes(option) && option !== group.options[0]) ? total + group.price : total, 0)
+    const unitPrice = parsePrice(selectedItem.price) + optionPrice
+    const key = `${selectedItem.name} · ${selectedOptions.join(', ')}`
+    setOrder((current) => ({ ...current, [key]: { item: selectedItem, quantity: (current[key]?.quantity ?? 0) + quantity, options: selectedOptions, unitPrice } }))
     setSelectedItem(null)
+    setSelectedOptions([])
     setQuantity(1)
     setOrderOpen(showSummary)
   }
 
-  const paymentLabel = paymentMethod === 'transferencia' ? 'pagaré por transferencia' : 'pagaré en la puerta de mi domicilio'
-  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir ${orderItems.map(({ item, quantity }) => `${quantity} ${item.name}`).join(', ')}. Total: ${formatPrice(orderTotal)}. ${paymentLabel}.`
+  const paymentLabel = paymentMethod === 'transferencia' ? 'transferencia' : paymentMethod === 'deuna' ? 'DeUna' : 'la puerta de mi domicilio'
+  const whatsappMessage = `Hola Crunchy, me llamo ${customerName.trim()} y quiero pedir:\n\n${orderItems.map(({ item, quantity, options }) => `${quantity}. ${item.name}${options.length ? ` (${options.join(', ')})` : ''} — ${formatPrice(parsePrice(item.price))}`).join('\\n') }\n\nEl precio estimado es de ${formatPrice(orderTotal)}. Pagaré por ${paymentLabel}.\n\nPrecio aproximado (se debate costos de envío y de packaging)`
   const whatsappUrl = `https://wa.me/593989998834?text=${encodeURIComponent(whatsappMessage)}`
 
   // Estado para controlar qué imagen del hero se muestra
@@ -270,13 +296,14 @@ export default function Page() {
                 <span className="opacity-60 mr-2">0{index + 1}</span>{category}
               </button>
             ))}
+            {comingSoonCategories.map((category, index) => <button key={category} type="button" onClick={() => window.alert('PROXIMAMENTE...!')} className="whitespace-nowrap rounded-full border border-[#7a2e4a]/40 px-3 py-2 text-[10px] font-black uppercase tracking-wider text-[#7a2e4a] hover:bg-[#7a2e4a] hover:text-[#ede8e2] transition-colors"><span className="opacity-60 mr-2">0{categories.length + index + 1}</span>{category}</button>)}
           </div>
 
           <div className="gap-3 sm:gap-4 grid md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (
               <article key={item.name} className="group bg-white shadow-[4px_4px_0_#44271a] rounded-2xl overflow-hidden text-[#44271a]">
                 <div className="relative aspect-[1.35] overflow-hidden">
-                  <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src={item.image} alt={item.name} fill onError={(event) => { event.currentTarget.src = '/hero1.jpg' }} className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <span className="top-4 right-4 absolute bg-[#bae0e3] px-3 py-2 rounded-full font-black text-[#44271a] text-sm">
                     {item.price}
                   </span>
@@ -284,7 +311,7 @@ export default function Page() {
                 <div className="p-4">
                   <h3 className="font-serif font-black text-xl">{item.name}</h3>
                   <p className="mt-1 text-[#44271a]/80 text-xs leading-4">{item.description}</p>
-                  <button type="button" onClick={() => { setSelectedItem(item); setQuantity(1) }} className="inline-flex items-center gap-2 bg-[#ed9aac] hover:bg-[#44271a] mt-3 px-4 py-2 rounded-full font-black text-[#44271a] text-[10px] hover:text-[#ede8e2] uppercase tracking-wider transition-colors">
+                  <button type="button" onClick={() => { setSelectedItem(item); setSelectedOptions([]); setQuantity(1) }} className="inline-flex items-center gap-2 bg-[#ed9aac] hover:bg-[#44271a] mt-3 px-4 py-2 rounded-full font-black text-[#44271a] text-[10px] hover:text-[#ede8e2] uppercase tracking-wider transition-colors">
                     Pedir este <ArrowRight size={14} />
                   </button>
                 </div>
@@ -348,9 +375,10 @@ export default function Page() {
                 <MapPin className="mb-8 text-[#44271a]" size={28} />
                 <h3 className="font-serif font-black text-[#44271a] text-4xl">Casa Solano</h3>
                 <p className="mt-3 text-[#44271a]/80">Gonzalo Cordero y Av. Solano - Cuenca, Ecuador</p>
-                <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] mt-8 px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">
-                  Abrir en Maps <ArrowRight size={14} />
-                </a>
+                <div className="flex flex-wrap gap-2 mt-8">
+                  <a href="https://maps.google.com/?q=Casa+Solano+Cuenca" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#44271a] hover:bg-[#bae0e3] px-5 py-3 rounded-full font-black text-[#ede8e2] hover:text-[#44271a] text-xs uppercase tracking-wider transition-colors">Abrir en Maps <ArrowRight size={14} /></a>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Crunchy+Churros+Cuenca" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-white hover:bg-[#ed9aac] px-5 py-3 rounded-full font-black text-[#44271a] text-xs uppercase tracking-wider transition-colors">Califícanos en Google Maps <Star size={14} /></a>
+                </div>
               </div>
             </div>
           </div>
@@ -385,6 +413,12 @@ export default function Page() {
               </div>
               <button type="button" onClick={() => setSelectedItem(null)} className="hover:bg-[#44271a]/10 p-2 rounded-full" aria-label="Cerrar"><X size={18} /></button>
             </div>
+            {getOptions(selectedItem).length > 0 && <div className="flex flex-col gap-4 my-5 max-h-64 overflow-y-auto">
+              {getOptions(selectedItem).map((group) => <fieldset key={group.label}>
+                <legend className="mb-2 font-black text-[10px] uppercase tracking-wider">{group.label}</legend>
+                <div className="flex flex-wrap gap-2">{group.options.map((option) => <label key={option} className="flex items-center gap-2 bg-white/70 px-3 py-2 rounded-full text-xs cursor-pointer"><input type="radio" name={`${selectedItem.name}-${group.label}`} checked={selectedOptions.includes(option)} onChange={() => setSelectedOptions((current) => [...current.filter((value) => !group.options.includes(value)), option])} />{option}</label>)}</div>
+              </fieldset>)}
+            </div>}
             <div className="flex justify-center items-center gap-5 my-7">
               <button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="bg-[#bae0e3] p-2 rounded-full" aria-label="Reducir cantidad"><Minus size={18} /></button>
               <span className="font-serif font-black text-3xl">{quantity}</span>
@@ -406,24 +440,22 @@ export default function Page() {
               <button type="button" onClick={() => setOrderOpen(false)} className="hover:bg-[#44271a]/10 p-2 rounded-full" aria-label="Cerrar"><X size={18} /></button>
             </div>
             <div className="flex flex-col gap-3 my-5">
-              {orderItems.length === 0 ? <p className="text-[#44271a]/70 text-sm">Todavía no has añadido productos.</p> : orderItems.map(({ item, quantity }) => (
-                <div key={item.name} className="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl text-sm">
-                  <div className="min-w-0">
-                    <span className="block font-bold truncate">{item.name}</span>
-                    <span className="text-[#44271a]/70">{quantity} × {item.price} = {formatPrice(parsePrice(item.price) * quantity)}</span>
-                  </div>
+              {orderItems.length === 0 ? <p className="text-[#44271a]/70 text-sm">Todavía no has añadido productos.</p> : orderItems.map(({ key, item, quantity, options, unitPrice }) => (
+                <div key={key} className="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl text-sm">
+                  <div className="min-w-0"><span className="block font-bold truncate">{item.name}</span><span className="block text-[#44271a]/70">{options.join(', ')}</span><span className="text-[#44271a]/70">{quantity} × {formatPrice(unitPrice)} = {formatPrice(unitPrice * quantity)}</span></div>
                   <div className="flex items-center gap-1 shrink-0">
-                    <button type="button" onClick={() => setOrder((current) => quantity > 1 ? { ...current, [item.name]: quantity - 1 } : Object.fromEntries(Object.entries(current).filter(([name]) => name !== item.name)))} className="bg-[#bae0e3] p-2 rounded-full" aria-label={`Quitar una unidad de ${item.name}`}><Minus size={14} /></button>
-                    <button type="button" onClick={() => setOrder((current) => ({ ...current, [item.name]: quantity + 1 }))} className="bg-[#ed9aac] p-2 rounded-full" aria-label={`Añadir una unidad de ${item.name}`}><Plus size={14} /></button>
+                    <button type="button" onClick={() => setOrder((current) => quantity > 1 ? { ...current, [key]: { ...current[key], quantity: quantity - 1 } } : Object.fromEntries(Object.entries(current).filter(([name]) => name !== key)))} className="bg-[#bae0e3] p-2 rounded-full" aria-label={`Quitar una unidad de ${item.name}`}><Minus size={14} /></button>
+                    <button type="button" onClick={() => setOrder((current) => ({ ...current, [key]: { ...current[key], quantity: quantity + 1 } }))} className="bg-[#ed9aac] p-2 rounded-full" aria-label={`Añadir una unidad de ${item.name}`}><Plus size={14} /></button>
                   </div>
                 </div>
               ))}
             </div>
             {orderItems.length > 0 && <>
               <div className="flex justify-between items-center mt-2 pt-4 border-[#44271a]/20 border-t font-black text-lg">
-                <span>Total del pedido</span>
+                <span>Precio aproximado</span>
                 <span>{formatPrice(orderTotal)}</span>
               </div>
+              <p className="mt-2 text-[#44271a]/65 text-[11px]">Precio aproximado (se debate costos de envío y de packaging)</p>
               <label htmlFor="customer-name" className="block mb-2 font-black text-xs uppercase tracking-wider">Pon el nombre de a quién va el pedido</label>
               <input id="customer-name" value={customerName} onChange={(event) => setCustomerName(event.target.value)} placeholder="Tu nombre" className="bg-white px-4 py-3 rounded-xl outline-none w-full text-sm" />
               <fieldset className="mt-4">
@@ -436,6 +468,10 @@ export default function Page() {
                   <label className="flex items-center gap-3 bg-white/70 hover:bg-white px-3 py-3 rounded-xl text-sm cursor-pointer">
                     <input type="radio" name="payment-method" value="puerta" checked={paymentMethod === 'puerta'} onChange={() => setPaymentMethod('puerta')} className="accent-[#3a5a30]" />
                     Pagaré en la puerta de mi domicilio
+                  </label>
+                  <label className="flex items-center gap-3 bg-white/70 hover:bg-white px-3 py-3 rounded-xl text-sm cursor-pointer">
+                    <input type="radio" name="payment-method" value="deuna" checked={paymentMethod === 'deuna'} onChange={() => setPaymentMethod('deuna')} className="accent-[#3a5a30]" />
+                    Pagaré con DeUna
                   </label>
                 </div>
               </fieldset>
