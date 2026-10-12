@@ -6,19 +6,19 @@ import Image from 'next/image'
 
 // Nota Fran: Añadí hero1, hero2 y hero3 para el carrusel
 const images = {
-  logo: '/images/crunchy-logo.png',
-  texturaNav: '/textura1.png',
-  hero1: '/hero1.jpg', 
-  hero2: '/hero2.jpg', 
-  hero3: '/hero3.jpg', 
-  napolitano: '/napolitano.jpg',
-  jalapeno: '/jalapeno.jpg',
-  cheesecake: '/cheesecake.jpg',
-  vibe: '/vibe.jpg',
-  space: '/space.jpg',
-  mascota: '/mascota.png',
-  casaSolano: '/images/casa-solano.png',
-  galeria: Array.from({ length: 10 }, (_, index) => `/galeria${index + 1}.jpg`),
+  logo: '/images/crunchy-logo.webp',
+  texturaNav: '/textura1.webp',
+  hero1: '/hero1.webp', 
+  hero2: '/hero2.webp', 
+  hero3: '/hero3.webp', 
+  napolitano: '/napolitano.webp',
+  jalapeno: '/jalapeno.webp',
+  cheesecake: '/cheesecake.webp',
+  vibe: '/vibe.webp',
+  space: '/space.webp',
+  mascota: '/mascota.webp',
+  casaSolano: '/images/casa-solano.webp',
+  galeria: Array.from({ length: 10 }, (_, index) => `/galeria${index + 1}.webp`),
 }
 
 const heroCarousel = [images.hero1, images.hero2, images.hero3]
@@ -93,45 +93,45 @@ const getOptions = (item: (typeof menu)[number]) => optionGroups[item.name] ?? [
 
 function MenuImage({ src, alt }: { src: string; alt: string }) {
   const [imageSrc, setImageSrc] = useState(src)
-  return <img src={imageSrc} alt={alt} onError={() => setImageSrc(fallbackImages[src] ?? '/hero1.jpg')} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+  return <img src={imageSrc} alt={alt} onError={() => setImageSrc(fallbackImages[src] ?? '/hero1.webp')} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
 }
 
 const menu = [
-  { category: categories[0], name: 'Brunch Americano', description: 'Incluye: Café americano, cappuccino o infusión. Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.jpg' },
-  { category: categories[0], name: 'Brunch Crunchy', description: 'Incluye: Café americano, cappuccino o infusión. Pan integral de masa madre con pesto, queso, jamón, 2 huevos, tomate cherry, aguacate y mayonesa de jalapeño.', price: '$6.75', image: '/crunchy_brunch.jpg' },
-  { category: categories[1], name: 'Churro clásico', description: 'Churro clásico de 15 cm. Elige azúcar, azúcar y canela o azúcar impalpable. Dip +$1.25.', price: '$1.50', image: '/images/menu/churro-clasico.png' },
-  { category: categories[1], name: 'Churro relleno', description: 'Churro clásico de 15 cm con relleno a elección. Topping +$0.50.', price: '$1.90', image: '/churro_relleno.jpg' },
-  { category: categories[2], name: 'Cheesecake', description: 'Elige entre frutos rojos o mango-coco.', price: '$3.85', image: '/images/menu/cheesecake.png' },
-  { category: categories[2], name: 'Tiramisú de churro', description: 'La versión Crunchy de un clásico italiano.', price: '$3.85', image: '/images/menu/tiramisu-churro.png' },
-  { category: categories[2], name: 'Parfait de churro', description: 'Yogurt griego con fruta y churros.', price: '$3.85', image: '/images/menu/parfait-churro.png' },
-  { category: categories[2], name: 'Sundae de churro', description: 'Helado a elección con 2 churros y crema batida.', price: '$3.99', image: '/images/menu/sundae-churro.png' },
-  { category: categories[2], name: 'Sanduche de churro', description: 'Helado a elección entre espirales de churro.', price: '$4.25', image: '/images/menu/sanduche-churro.png' },
-  { category: categories[3], name: 'Churro jalapeño', description: 'Base de 2 churros, queso crema, tomates confitados, jalapeños y orégano. Picante muy bajo.', price: '$4.15', image: '/images/menu/churro-jalapeno.png' },
-  { category: categories[3], name: 'Churro pizza', description: 'Base de 2 churros, pasta de tomate, jamón, orégano y queso mozzarella.', price: '$3.85', image: '/images/menu/churro-pizza.png' },
-  { category: categories[3], name: 'Churro napolitano', description: 'Base de 2 churros, pasta de tomate, albahaca, orégano, nueces y queso mozzarella.', price: '$3.50', image: '/images/menu/churro-napolitano.png' },
-  { category: categories[4], name: 'Espresso', description: 'Café espresso.', price: '$2.00', image: '/images/menu/espresso.png' },
-  { category: categories[4], name: 'Espresso doble', description: 'Doble shot de espresso.', price: '$2.50', image: '/images/menu/espresso.png' },
-  { category: categories[4], name: 'Americano', description: 'Espresso alargado con agua caliente.', price: '$2.75', image: '/images/menu/americano.png' },
-  { category: categories[4], name: 'Long black', description: 'Café intenso y aromático.', price: '$3.00', image: '/images/menu/long-black.png' },
-  { category: categories[4], name: 'Cortado', description: 'Espresso con un toque de leche.', price: '$2.85', image: '/images/menu/cortado.png' },
-  { category: categories[4], name: 'Cappuccino', description: 'Espresso, leche vaporizada y espuma.', price: '$2.95', image: '/images/menu/cappuccino.jpeg' },
-  { category: categories[4], name: 'Latte', description: 'Espresso con leche cremosa.', price: '$3.00', image: '/images/menu/latte.png' },
-  { category: categories[4], name: 'Flat white', description: 'Espresso doble con microespuma.', price: '$3.00', image: '/images/menu/flat-white.png' },
-  { category: categories[4], name: 'Mocaccino', description: 'Café, chocolate y leche.', price: '$3.99', image: '/images/menu/mocaccino.png' },
-  { category: categories[4], name: 'Irish coffee', description: 'Café con un toque especial.', price: '$3.99', image: '/images/menu/irish-coffee.png' },
-  { category: categories[4], name: 'Latte de churro', description: 'Latte con el sabor de nuestro churro.', price: '$3.99', image: '/images/menu/latte-churro.png' },
-  { category: categories[4], name: 'Chocolate caliente', description: 'Chocolate caliente y reconfortante.', price: '$3.99', image: '/chocolate_caliente.jpg' },
-  { category: categories[4], name: 'Infusiones', description: 'Frutos rojos, manzana y canela, u orange & ginger.', price: '$2.50', image: '/images/menu/infusiones.png' },
-  { category: categories[5], name: 'Creme brulatte', description: 'Café frío con una capa dulce y crujiente.', price: '$3.99', image: '/images/menu/creme-brulatte.png' },
-  { category: categories[5], name: 'Limonada gaseosa', description: 'Limonada refrescante con burbujas.', price: '$3.50', image: '/limonada_gaseosa.jpg' },
-  { category: categories[5], name: 'Limonada de coco', description: 'Limonada cremosa con coco.', price: '$3.50', image: '/images/menu/limonada-coco.png' },
-  { category: categories[5], name: 'Limonada frutos rojos', description: 'Limonada con frutos rojos.', price: '$3.50', image: '/images/menu/limonada-frutos-rojos.png' },
-  { category: categories[5], name: 'Limonada clásica', description: 'Limonada recién hecha.', price: '$3.00', image: '/images/menu/limonada.png' },
-  { category: categories[5], name: 'Jugo natural', description: 'Banano-maracuyá, fresa, maracuyá, mora, coco o mango.', price: '$3.00', image: '/images/menu/jugo-natural.png' },
-  { category: categories[5], name: 'Smoothie', description: 'Banano-maracuyá, fresa, maracuyá, mora, coco o mango.', price: '$3.99', image: '/images/menu/smoothie.png' },
-  { category: categories[5], name: 'Milkshake', description: 'Con helado a elección.', price: '$3.99', image: '/images/menu/milkshake.png' },
-  { category: categories[6], name: 'Syrups', description: 'Pistacho, vainilla, caramelo salado, amaretto o licor de café.', price: '$0.50', image: '/syrups.jpg' },
-  { category: categories[6], name: 'Tipo de leche', description: 'Almendras, avena o deslactosada.', price: '$0.50', image: '/tipo_de_leche.jpg' },
+  { category: categories[0], name: 'Brunch Americano', description: 'Incluye: Café americano, cappuccino o infusión. Pancakes, miel de maple, 2 huevos a elección, tocino y fruta en almíbar.', price: '$6.50', image: '/americano_brunch.webp' },
+  { category: categories[0], name: 'Brunch Crunchy', description: 'Incluye: Café americano, cappuccino o infusión. Pan integral de masa madre con pesto, queso, jamón, 2 huevos, tomate cherry, aguacate y mayonesa de jalapeño.', price: '$6.75', image: '/crunchy_brunch.webp' },
+  { category: categories[1], name: 'Churro clásico', description: 'Churro clásico de 15 cm. Elige azúcar, azúcar y canela o azúcar impalpable. Dip +$1.25.', price: '$1.50', image: '/images/menu/churro-clasico.webp' },
+  { category: categories[1], name: 'Churro relleno', description: 'Churro clásico de 15 cm con relleno a elección. Topping +$0.50.', price: '$1.90', image: '/churro_relleno.webp' },
+  { category: categories[2], name: 'Cheesecake', description: 'Elige entre frutos rojos o mango-coco.', price: '$3.85', image: '/images/menu/cheesecake.webp' },
+  { category: categories[2], name: 'Tiramisú de churro', description: 'La versión Crunchy de un clásico italiano.', price: '$3.85', image: '/images/menu/tiramisu-churro.webp' },
+  { category: categories[2], name: 'Parfait de churro', description: 'Yogurt griego con fruta y churros.', price: '$3.85', image: '/images/menu/parfait-churro.webp' },
+  { category: categories[2], name: 'Sundae de churro', description: 'Helado a elección con 2 churros y crema batida.', price: '$3.99', image: '/images/menu/sundae-churro.webp' },
+  { category: categories[2], name: 'Sanduche de churro', description: 'Helado a elección entre espirales de churro.', price: '$4.25', image: '/images/menu/sanduche-churro.webp' },
+  { category: categories[3], name: 'Churro jalapeño', description: 'Base de 2 churros, queso crema, tomates confitados, jalapeños y orégano. Picante muy bajo.', price: '$4.15', image: '/images/menu/churro-jalapeno.webp' },
+  { category: categories[3], name: 'Churro pizza', description: 'Base de 2 churros, pasta de tomate, jamón, orégano y queso mozzarella.', price: '$3.85', image: '/images/menu/churro-pizza.webp' },
+  { category: categories[3], name: 'Churro napolitano', description: 'Base de 2 churros, pasta de tomate, albahaca, orégano, nueces y queso mozzarella.', price: '$3.50', image: '/images/menu/churro-napolitano.webp' },
+  { category: categories[4], name: 'Espresso', description: 'Café espresso.', price: '$2.00', image: '/images/menu/espresso.webp' },
+  { category: categories[4], name: 'Espresso doble', description: 'Doble shot de espresso.', price: '$2.50', image: '/images/menu/espresso.webp' },
+  { category: categories[4], name: 'Americano', description: 'Espresso alargado con agua caliente.', price: '$2.75', image: '/images/menu/americano.webp' },
+  { category: categories[4], name: 'Long black', description: 'Café intenso y aromático.', price: '$3.00', image: '/images/menu/long-black.webp' },
+  { category: categories[4], name: 'Cortado', description: 'Espresso con un toque de leche.', price: '$2.85', image: '/images/menu/cortado.webp' },
+  { category: categories[4], name: 'Cappuccino', description: 'Espresso, leche vaporizada y espuma.', price: '$2.95', image: '/images/menu/cappuccino.webp' },
+  { category: categories[4], name: 'Latte', description: 'Espresso con leche cremosa.', price: '$3.00', image: '/images/menu/latte.webp' },
+  { category: categories[4], name: 'Flat white', description: 'Espresso doble con microespuma.', price: '$3.00', image: '/images/menu/flat-white.webp' },
+  { category: categories[4], name: 'Mocaccino', description: 'Café, chocolate y leche.', price: '$3.99', image: '/images/menu/mocaccino.webp' },
+  { category: categories[4], name: 'Irish coffee', description: 'Café con un toque especial.', price: '$3.99', image: '/images/menu/irish-coffee.webp' },
+  { category: categories[4], name: 'Latte de churro', description: 'Latte con el sabor de nuestro churro.', price: '$3.99', image: '/images/menu/latte-churro.webp' },
+  { category: categories[4], name: 'Chocolate caliente', description: 'Chocolate caliente y reconfortante.', price: '$3.99', image: '/chocolate_caliente.webp' },
+  { category: categories[4], name: 'Infusiones', description: 'Frutos rojos, manzana y canela, u orange & ginger.', price: '$2.50', image: '/images/menu/infusiones.webp' },
+  { category: categories[5], name: 'Creme brulatte', description: 'Café frío con una capa dulce y crujiente.', price: '$3.99', image: '/images/menu/creme-brulatte.webp' },
+  { category: categories[5], name: 'Limonada gaseosa', description: 'Limonada refrescante con burbujas.', price: '$3.50', image: '/limonada_gaseosa.webp' },
+  { category: categories[5], name: 'Limonada de coco', description: 'Limonada cremosa con coco.', price: '$3.50', image: '/images/menu/limonada-coco.webp' },
+  { category: categories[5], name: 'Limonada frutos rojos', description: 'Limonada con frutos rojos.', price: '$3.50', image: '/images/menu/limonada-frutos-rojos.webp' },
+  { category: categories[5], name: 'Limonada clásica', description: 'Limonada recién hecha.', price: '$3.00', image: '/images/menu/limonada.webp' },
+  { category: categories[5], name: 'Jugo natural', description: 'Banano-maracuyá, fresa, maracuyá, mora, coco o mango.', price: '$3.00', image: '/images/menu/jugo-natural.webp' },
+  { category: categories[5], name: 'Smoothie', description: 'Banano-maracuyá, fresa, maracuyá, mora, coco o mango.', price: '$3.99', image: '/images/menu/smoothie.webp' },
+  { category: categories[5], name: 'Milkshake', description: 'Con helado a elección.', price: '$3.99', image: '/images/menu/milkshake.webp' },
+  { category: categories[6], name: 'Syrups', description: 'Pistacho, vainilla, caramelo salado, amaretto o licor de café.', price: '$0.50', image: '/syrups.webp' },
+  { category: categories[6], name: 'Tipo de leche', description: 'Almendras, avena o deslactosada.', price: '$0.50', image: '/tipo_de_leche.webp' },
 ]
 
 export default function Page() {
@@ -428,7 +428,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* SECCIÓN HORARIOS Y MAPA */}
+      {/* SECCI��N HORARIOS Y MAPA */}
       <section id="horarios" className="bg-[#ede8e2] px-5 lg:px-8 py-20 lg:py-28">
         <div className="gap-5 grid md:grid-cols-2 mx-auto max-w-7xl">
           <div className="bg-[#ed9aac] p-7 sm:p-10 border-[#44271a] border-2 rounded-[30px]">
