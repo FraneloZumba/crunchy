@@ -562,10 +562,10 @@ export default function Page() {
       {/* FOOTER CON MASCOTA */}
       <footer className="relative bg-[#44271a] px-5 lg:px-8 pt-20 pb-10 overflow-hidden text-[#ede8e2]">
         <div className="z-10 relative flex sm:flex-row flex-col justify-between sm:items-end gap-6 mx-auto mb-6 pb-10 border-[#ede8e2]/20 border-b max-w-7xl">
-          <div>
-          <Image src={images.logo} alt="Crunchy" width={220} height={96} className="w-52 h-auto object-contain" />
-          </div>
-          <div className="flex flex-col items-center sm:items-end gap-1">
+  <div className="flex justify-center sm:justify-start">
+  <Image src={images.logo} alt="Crunchy" width={220} height={96} className="w-52 h-auto object-contain" />
+  </div>
+  <div className="flex flex-col items-center sm:items-end gap-1">
             <Image src={images.mascota} alt="Mascota Crunchy" width={180} height={180} className="mt-3 object-contain" />
             <a href="https://instagram.com/crunchychurros.ec" className="flex items-center gap-2 font-bold hover:text-[#ed9aac] text-sm transition-colors">
               <Camera size={18} /> @crunchychurros.ec
