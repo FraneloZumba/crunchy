@@ -33,13 +33,20 @@ const optionGroups: Record<string, { label: string; price: number; options: stri
   ],
   'Churro relleno': [
     { label: 'Relleno', price: 0, options: ['Crema de café', 'Frutos rojos', 'Mango coco', 'Dulce de leche', 'Chocolate', 'Chocolate blanco', 'Crema de maracuyá'] },
-    { label: 'Topping (+$0.50)', price: 0.5, options: Array.from({ length: 21 }, (_, index) => `Topping${index + 1}`) },
+    { label: 'Topping (+$0.50)', price: 0.5, options: ['Coco rallado', 'Almendras fileteadas', 'Praliné de almendras', 'Nueces', 'Maní', 'Oreo', 'Galak', 'Kinder bueno', 'Galleta Choco chips', 'Tango', 'Lluvia de chocolate negro', 'Lluvia de chocolate de colores', 'Gotas de chocolate negro', 'Gotas de chocolate blanco', 'Marshmallows', 'Frootloops', 'Zucaritas', 'Chocapic', 'Grajea de chocolate de colores', 'Barquillos de chocolate', 'Pretzel'] },
   ],
   Cheesecake: [{ label: 'Sabor', price: 0, options: ['Frutos rojos', 'Mango coco'] }],
   'Sundae de churro': [{ label: 'Sabor del helado', price: 0, options: ['Vainilla', 'Chocolate'] }],
   'Sanduche de churro': [{ label: 'Sabor del helado', price: 0, options: ['Vainilla', 'Chocolate'] }],
   Milkshake: [{ label: 'Sabor del helado', price: 0, options: ['Vainilla', 'Chocolate'] }],
-  'Brunch Americano': [{ label: 'Huevos', price: 0, options: ['Revueltos', 'Fritos'] }],
+  'Brunch Americano': [
+    { label: 'Huevos', price: 0, options: ['Revueltos', 'Fritos'] },
+    { label: 'Bebida', price: 0, options: ['Café americano', 'Cappuccino', 'Infusión de frutos rojos', 'Infusión de manzana y canela', 'Infusión de naranja y jengibre'] },
+  ],
+  'Brunch Crunchy': [
+    { label: 'Huevos', price: 0, options: ['Revueltos', 'Fritos'] },
+    { label: 'Bebida', price: 0, options: ['Café americano', 'Cappuccino', 'Infusión de frutos rojos', 'Infusión de manzana y canela', 'Infusión de naranja y jengibre'] },
+  ],
   Infusiones: [{ label: 'Sabor', price: 0, options: ['Frutos rojos', 'Manzana y canela', 'Orange & ginger'] }],
   'Jugo natural': [{ label: 'Sabor', price: 0, options: ['Banano-maracuyá', 'Fresa', 'Maracuyá', 'Mora', 'Coco', 'Mango'] }],
   Smoothie: [{ label: 'Sabor', price: 0, options: ['Banano-maracuyá', 'Fresa', 'Maracuyá', 'Mora', 'Coco', 'Mango'] }],
@@ -499,12 +506,12 @@ export default function Page() {
 
       {orderOpen && !selectedItem && (
         <div className="z-[60] fixed inset-0 flex justify-center items-center bg-[#44271a]/70 p-4" role="dialog" aria-modal="true" aria-labelledby="order-title">
-          <div className="bg-[#ede8e2] shadow-2xl p-6 rounded-3xl w-full max-w-md text-[#44271a]">
-            <div className="flex justify-between items-start gap-4">
+          <div className="flex flex-col bg-[#ede8e2] shadow-2xl p-6 rounded-3xl w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain text-[#44271a]">
+            <div className="flex justify-between items-start gap-4 shrink-0">
               <div><p className="mb-1 font-black text-[#ed9aac] text-[10px] uppercase tracking-widest">Tu pedido</p><h2 id="order-title" className="font-serif font-black text-3xl">Arma tu pedido</h2></div>
               <button type="button" onClick={() => setOrderOpen(false)} className="hover:bg-[#44271a]/10 p-2 rounded-full" aria-label="Cerrar"><X size={18} /></button>
             </div>
-            <div className="flex flex-col gap-3 my-5">
+            <div className="flex flex-col gap-3 my-5 pr-1">
               {orderItems.length === 0 ? <p className="text-[#44271a]/70 text-sm">Todavía no has añadido productos.</p> : orderItems.map(({ key, item, quantity, options, unitPrice }) => (
                 <div key={key} className="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl text-sm">
                   <div className="min-w-0"><span className="block font-bold truncate">{item.name}</span><span className="block text-[#44271a]/70">{options.join(', ')}</span><span className="text-[#44271a]/70">{quantity} × {formatPrice(unitPrice)} = {formatPrice(unitPrice * quantity)}</span></div>
@@ -515,7 +522,7 @@ export default function Page() {
                 </div>
               ))}
             </div>
-            {orderItems.length > 0 && <>
+            {orderItems.length > 0 && <div className="shrink-0">
               <div className="flex justify-between items-center mt-2 pt-4 border-[#44271a]/20 border-t font-black text-lg">
                 <span>Precio aproximado</span>
                 <span>{formatPrice(orderTotal)}</span>
@@ -540,8 +547,8 @@ export default function Page() {
                   </label>
                 </div>
               </fieldset>
-              <div className="flex gap-2 mt-4">
-                <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
+              <div className="flex sm:flex-row flex-col gap-2 mt-4">
+                <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full w-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
                 <button
                   type="button"
                   disabled={!customerName.trim() || !paymentMethod}
@@ -549,12 +556,12 @@ export default function Page() {
                     if (!customerName.trim() || !paymentMethod) return
                     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
                   }}
-                  className="flex flex-1 justify-center items-center bg-[#3a5a30] hover:bg-[#2d4725] disabled:opacity-40 disabled:cursor-not-allowed px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors"
+                  className="flex flex-1 justify-center items-center bg-[#3a5a30] hover:bg-[#2d4725] disabled:opacity-40 disabled:cursor-not-allowed px-3 py-3 rounded-full w-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors"
                 >
                   Pedir por WhatsApp
                 </button>
               </div>
-            </>}
+            </div>}
           </div>
         </div>
       )}
