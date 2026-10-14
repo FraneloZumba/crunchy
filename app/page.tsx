@@ -506,12 +506,12 @@ export default function Page() {
 
       {orderOpen && !selectedItem && (
         <div className="z-[60] fixed inset-0 flex justify-center items-center bg-[#44271a]/70 p-4" role="dialog" aria-modal="true" aria-labelledby="order-title">
-          <div className="flex flex-col bg-[#ede8e2] shadow-2xl p-6 rounded-3xl w-full max-w-md h-[min(680px,calc(100dvh-2rem))] text-[#44271a]">
+          <div className="flex flex-col bg-[#ede8e2] shadow-2xl p-6 rounded-3xl w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain text-[#44271a]">
             <div className="flex justify-between items-start gap-4 shrink-0">
               <div><p className="mb-1 font-black text-[#ed9aac] text-[10px] uppercase tracking-widest">Tu pedido</p><h2 id="order-title" className="font-serif font-black text-3xl">Arma tu pedido</h2></div>
               <button type="button" onClick={() => setOrderOpen(false)} className="hover:bg-[#44271a]/10 p-2 rounded-full" aria-label="Cerrar"><X size={18} /></button>
             </div>
-            <div className="flex flex-col gap-3 my-5 min-h-0 overflow-y-auto overscroll-contain pr-1">
+            <div className="flex flex-col gap-3 my-5 pr-1">
               {orderItems.length === 0 ? <p className="text-[#44271a]/70 text-sm">Todavía no has añadido productos.</p> : orderItems.map(({ key, item, quantity, options, unitPrice }) => (
                 <div key={key} className="flex justify-between items-center gap-3 bg-white/70 p-3 rounded-xl text-sm">
                   <div className="min-w-0"><span className="block font-bold truncate">{item.name}</span><span className="block text-[#44271a]/70">{options.join(', ')}</span><span className="text-[#44271a]/70">{quantity} × {formatPrice(unitPrice)} = {formatPrice(unitPrice * quantity)}</span></div>
@@ -547,8 +547,8 @@ export default function Page() {
                   </label>
                 </div>
               </fieldset>
-              <div className="flex gap-2 mt-4">
-                <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
+              <div className="flex sm:flex-row flex-col gap-2 mt-4">
+                <button type="button" onClick={() => { setOrderOpen(false); document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' }) }} className="flex-1 bg-[#bae0e3] hover:bg-[#ed9aac] px-3 py-3 rounded-full w-full font-black text-[#44271a] text-[10px] uppercase tracking-wider transition-colors">Añadir más comida</button>
                 <button
                   type="button"
                   disabled={!customerName.trim() || !paymentMethod}
@@ -556,7 +556,7 @@ export default function Page() {
                     if (!customerName.trim() || !paymentMethod) return
                     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
                   }}
-                  className="flex flex-1 justify-center items-center bg-[#3a5a30] hover:bg-[#2d4725] disabled:opacity-40 disabled:cursor-not-allowed px-3 py-3 rounded-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors"
+                  className="flex flex-1 justify-center items-center bg-[#3a5a30] hover:bg-[#2d4725] disabled:opacity-40 disabled:cursor-not-allowed px-3 py-3 rounded-full w-full font-black text-[#ede8e2] text-[10px] uppercase tracking-wider transition-colors"
                 >
                   Pedir por WhatsApp
                 </button>
