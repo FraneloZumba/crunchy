@@ -463,11 +463,8 @@ export default function Page() {
               <div className="flex justify-between pb-3 border-[#44271a]/20 border-b">
                 <span>Lunes a Jueves</span><strong>16:00 — 20:00</strong>
               </div>
-              <div className="flex justify-between pb-3 border-[#44271a]/20 border-b">
-                <span>Viernes a Sábado</span><strong>11:00 — 21:00</strong>
-              </div>
               <div className="flex justify-between">
-                <span>Domingo</span><strong>11:00 — 21:00</strong>
+                <span>Viernes a Domingo</span><strong>11:00 — 21:00</strong>
               </div>
             </div>
           </div>
